@@ -12,16 +12,10 @@ Original project: https://github.com/AndreyPavlenko/Fermata
 
 ### Xtream account integration (TV addon)
 - Added direct Xtream account mode in TV source add/edit flow.
-- Supports importing one content type at a time:
+- Supports importing content types:
 	- Channels
 	- Movies
-	- Series
-- Supports server URL + username/password and parsing credentials from full `player_api.php` URLs.
-- Added retries/fallback handling for unstable provider responses.
-
-### Series playback improvements
-- Series items open like normal list entries (same flow as movies/channels).
-- Added season selection dialog with filtered episodes.
+	- Serie
 
 ### Manual source refresh workflow
 - Added source-level **Refresh** in TV source long-press context menu.
@@ -33,7 +27,6 @@ Original project: https://github.com/AndreyPavlenko/Fermata
 - Added cache-clear/reload flow to reduce stale or duplicated source state after refresh.
 
 ### UI/branding changes
-- App name changed to **Fermata Xtream**.
 - About page updated with mod credits:
 	- Modded by Vasileios Antoniadis
 	- Xtream account support added
@@ -42,8 +35,7 @@ Original project: https://github.com/AndreyPavlenko/Fermata
 
 ### First-run anti-scam message
 - Added one-time first-run warning dialog.
-- Message is stored obfuscated in code and decoded at runtime.
-
+- 
 ## Notes
 - This repository is a modification/fork and is not the original upstream project.
 - Respect upstream licensing and attribution.

@@ -86,4 +86,3 @@ Ported from upstream without changing existing fork behavior:
 ## Notes
 - This repository is a modification/fork and is not the original upstream project.
 - Respect upstream licensing and attribution.
-- Premium-only features (Nuvio/Stremio/CloudStream, Home Assistant, NVR/cameras, Plex, Dashcam, browser ad/popup blockers, passenger remote, dual-view TV, FS Play, custom theme backgrounds, and related code) are intentionally omitted from this source release.

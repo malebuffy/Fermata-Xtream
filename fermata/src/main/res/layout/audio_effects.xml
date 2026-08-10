@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- ====================== Equalizer  ====================== -->
+    <me.aap.utils.ui.view.OutlinedConstraintLayout
+        android:id="@+id/equalizer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical"
+        app:backgroundColor="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorOnSecondary"
+        app:cornerRadius="?attr/cornerRadius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:numLabels="2">
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/equalizer_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/equalier"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toTopOf="@id/equalizer_preset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/equalizer_switch"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusDown="@id/equalizer_preset"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/equalizer_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/equalizer_title" />
+
+        <me.aap.utils.pref.PreferenceView
+            android:id="@+id/equalizer_preset"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusUp="@id/equalizer_switch"
+            app:layout_constraintBottom_toTopOf="@id/equalizer_bands"
+            app:layout_constraintEnd_toStartOf="@id/equalizer_preset_save"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/equalizer_title"
+            tools:ignore="RtlSymmetry" />
+
+        <me.aap.utils.ui.view.ImageButton
+            android:id="@+id/equalizer_preset_save"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusUp="@id/equalizer_switch"
+            android:scaleType="fitCenter"
+            android:src="@drawable/save"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/equalizer_preset"
+            app:layout_constraintEnd_toStartOf="@id/equalizer_preset_delete"
+            app:layout_constraintStart_toEndOf="@id/equalizer_preset"
+            app:layout_constraintTop_toTopOf="@id/equalizer_preset" />
+
+        <me.aap.utils.ui.view.ImageButton
+            android:id="@+id/equalizer_preset_delete"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/delete"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/equalizer_preset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/equalizer_preset_save"
+            app:layout_constraintTop_toTopOf="@id/equalizer_preset" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/equalizer_bands"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/equalizer_preset" />
+    </me.aap.utils.ui.view.OutlinedConstraintLayout>
+    <!-- ======================================================== -->
+
+    <!-- ====================== Virtualizer  ====================== -->
+    <me.aap.utils.ui.view.OutlinedConstraintLayout
+        android:id="@+id/virtualizer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical"
+        app:backgroundColor="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorOnSecondary"
+        app:cornerRadius="?attr/cornerRadius"
+        app:layout_constraintBottom_toTopOf="@id/bass"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/equalizer"
+        app:numLabels="2">
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/virtualizer_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/virtualizer"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toTopOf="@id/virtualizer_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/virtualizer_switch"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusDown="@id/virtualizer_mode"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/virtualizer_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/virtualizer_title" />
+
+        <me.aap.utils.pref.PreferenceView
+            android:id="@+id/virtualizer_mode"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusUp="@id/virtualizer_switch"
+            app:layout_constraintBottom_toTopOf="@id/virtualizer_seek_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/virtualizer_title"
+            tools:ignore="RtlSymmetry" />
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/virtualizer_seek_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:lines="1"
+            android:text="@string/strength"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/virtualizer_seek"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/virtualizer_mode" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/virtualizer_seek"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:nextFocusDown="@id/bass_switch"
+            app:layout_constraintBottom_toBottomOf="@id/virtualizer_seek_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/virtualizer_seek_title"
+            app:layout_constraintTop_toTopOf="@id/virtualizer_seek_title" />
+    </me.aap.utils.ui.view.OutlinedConstraintLayout>
+    <!-- ======================================================== -->
+
+    <!-- ====================== Bass  ====================== -->
+    <me.aap.utils.ui.view.OutlinedConstraintLayout
+        android:id="@+id/bass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical"
+        app:backgroundColor="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorOnSecondary"
+        app:cornerRadius="?attr/cornerRadius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/virtualizer"
+        app:numLabels="2">
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/bass_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/bass_boost"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toTopOf="@id/virtualizer_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/bass_switch"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusDown="@id/bass_seek"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/bass_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bass_title" />
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/bass_seek_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:lines="1"
+            android:text="@string/strength"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bass_seek"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bass_title" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/bass_seek"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:nextFocusUp="@id/bass_switch"
+            app:layout_constraintBottom_toBottomOf="@id/bass_seek_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/bass_seek_title"
+            app:layout_constraintTop_toTopOf="@id/bass_seek_title" />
+    </me.aap.utils.ui.view.OutlinedConstraintLayout>
+    <!-- ======================================================== -->
+
+    <!-- ====================== Volume  ====================== -->
+    <me.aap.utils.ui.view.OutlinedConstraintLayout
+        android:id="@+id/vol_boost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical"
+        app:backgroundColor="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorOnSecondary"
+        app:cornerRadius="?attr/cornerRadius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bass"
+        app:numLabels="2">
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/vol_boost_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/vol_boost"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toTopOf="@id/bass"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/vol_boost_switch"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:nextFocusDown="@id/vol_boost_seek"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/vol_boost_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vol_boost_title" />
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/vol_boost_seek_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:lines="1"
+            android:text="@string/strength"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vol_boost_seek"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vol_boost_title" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/vol_boost_seek"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:nextFocusUp="@id/vol_boost_switch"
+            app:layout_constraintBottom_toBottomOf="@id/vol_boost_seek_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/vol_boost_seek_title"
+            app:layout_constraintTop_toTopOf="@id/vol_boost_seek_title" />
+    </me.aap.utils.ui.view.OutlinedConstraintLayout>
+    <!-- ======================================================== -->
+
+    <!-- ====================== Apply to  ====================== -->
+    <me.aap.utils.ui.view.OutlinedLinearLayout
+        android:id="@+id/apply_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical"
+        app:backgroundColor="?attr/colorSecondary"
+        app:boxStrokeColor="?attr/colorOnSecondary"
+        app:cornerRadius="?attr/cornerRadius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vol_boost">
+
+        <me.aap.utils.ui.view.ScalableTextView
+            android:id="@+id/apply_to_title"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/apply_to"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <me.aap.utils.pref.PreferenceView
+            android:id="@+id/track"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:paddingStart="5dp"
+            tools:ignore="RtlSymmetry" />
+
+        <me.aap.utils.pref.PreferenceView
+            android:id="@+id/folder"
+            style="?attr/appEqualizerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/focusable_shape_transparent"
+            android:focusable="true"
+            android:paddingStart="5dp"
+            tools:ignore="RtlSymmetry" />
+
+    </me.aap.utils.ui.view.OutlinedLinearLayout>
+    <!-- ======================================================== -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

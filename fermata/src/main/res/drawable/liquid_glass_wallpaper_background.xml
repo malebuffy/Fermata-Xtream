@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:antialias="true"
+            android:dither="true"
+            android:gravity="fill"
+            android:src="@drawable/liquid_glass_wallpaper" />
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:endColor="#52102034"
+                android:startColor="#15102034" />
+        </shape>
+    </item>
+</layer-list>

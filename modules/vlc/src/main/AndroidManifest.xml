@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    split="vlc"
+    android:isFeatureSplit="true">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/engine_vlc_name">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>
+

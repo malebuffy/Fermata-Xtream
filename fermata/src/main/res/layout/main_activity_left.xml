@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/appShellBackground"
+    android:layoutDirection="ltr">
+
+    <me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.view.FermataNavBarView
+        android:id="@+id/nav_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:labelVisibilityMode="selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:position="LEFT" />
+
+    <me.aap.utils.ui.view.ToolBarView
+        android:id="@+id/tool_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/body_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/nav_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.view.BodyLayout
+        android:id="@+id/body_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?attr/appContentBackground"
+        app:layout_constraintBottom_toTopOf="@id/control_panel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/nav_bar"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar"
+        app:layout_constraintVertical_weight="1" />
+
+    <me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.view.ControlPanelView
+        android:id="@+id/control_panel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/nav_bar"
+        app:layout_constraintTop_toBottomOf="@id/body_layout" />
+
+    <me.aap.utils.ui.view.FloatingButton
+        android:id="@+id/floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:alpha="0.5"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@id/control_panel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/content_loading_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar" />
+
+    <me.aap.utils.ui.menu.OverlayMenuView
+        android:id="@+id/tool_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar"
+        app:layout_constraintVertical_bias="0" />
+
+    <me.aap.utils.ui.menu.OverlayMenuView
+        android:id="@+id/context_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <me.aap.utils.ui.menu.OverlayMenuView
+        android:id="@+id/control_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/control_panel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1" />
+
+    <me.aap.utils.ui.menu.OverlayMenuView
+        android:id="@+id/nav_menu_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nav_bar"
+        app:layout_constraintVertical_bias="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,953 @@
+package me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.view;
+
+import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
+import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
+import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
+import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
+import static android.view.KeyEvent.KEYCODE_DPAD_UP;
+import static android.view.KeyEvent.KEYCODE_ENTER;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
+import static androidx.core.text.HtmlCompat.fromHtml;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.lib.MediaLib.PlayableItem;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SCALE_16_9;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SCALE_4_3;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SCALE_BEST;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SCALE_FILL;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SCALE_ORIGINAL;
+import static me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs.SUB_SIZE;
+import static me.aap.utils.async.Completed.completedNull;
+import static me.aap.utils.ui.UiUtils.isVisible;
+import static me.aap.utils.ui.UiUtils.toIntPx;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.SurfaceTexture;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextClock;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.circularreveal.CircularRevealFrameLayout;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.FermataApplication;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.R;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.engine.MediaEngine;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.pref.MediaPrefs;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.service.FermataServiceUiBinder;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.service.MediaSessionCallback;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.sub.SubGrid;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.media.sub.Subtitles;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.activity.MainActivityDelegate;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.activity.MainActivityListener;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.activity.MainActivityPrefs;
+import me.aap.utils.async.FutureSupplier;
+import me.aap.utils.async.Promise;
+import me.aap.utils.function.BiConsumer;
+import me.aap.utils.log.Log;
+import me.aap.utils.pref.PreferenceStore;
+import me.aap.utils.ui.view.NavBarView;
+
+/**
+ * @author Andrey Pavlenko
+ */
+public class VideoView extends FrameLayout
+		implements SurfaceHolder.Callback, View.OnLayoutChangeListener, PreferenceStore.Listener,
+		MainActivityListener, BiConsumer<SubGrid.Position, Subtitles.Text>,
+		TextureView.SurfaceTextureListener {
+	private final Set<PreferenceStore.Pref<?>> prefChange = new HashSet<>(
+			Arrays.asList(MediaPrefs.VIDEO_SCALE, MediaPrefs.AUDIO_DELAY, MediaPrefs.AUDIO_DELAY_AA,
+					MediaPrefs.SUB_DELAY));
+	private SubDrawer subDrawer;
+	private FutureSupplier<?> createSurface = new Promise<>();
+	private SurfaceView videoSurface;
+	private SurfaceView subtitleSurface;
+	private TextureView videoTexture;
+	private VideoInfoView infoView;
+	private View clockView;
+	private ProgressBar loadingSpinner;
+	private int videoTargetWidth = -1;
+	private int videoTargetHeight = -1;
+	private boolean mediaSessionSurface = true;
+	private boolean textureVideo;
+	@Nullable
+	private MediaEngine surfaceEngine;
+
+	public VideoView(Context context) {
+		this(context, null);
+	}
+
+	public VideoView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init(context);
+		getActivity().onSuccess(a -> {
+			a.addBroadcastListener(this);
+			a.getLib().getPrefs().addBroadcastListener(this);
+			setClockPos(a.getPrefs().getClockPosPref());
+		});
+	}
+
+	protected void init(Context context) {
+		setBackgroundColor(Color.BLACK);
+		videoSurface = new SurfaceView(getContext()) {
+			{
+				FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+				lp.gravity = Gravity.CENTER;
+				setLayoutParams(lp);
+				getHolder().addCallback(VideoView.this);
+			}
+		};
+		addView(videoSurface);
+		subtitleSurface = new SurfaceView(getContext()) {
+			{
+				FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+				lp.gravity = Gravity.CENTER;
+				setLayoutParams(lp);
+				setZOrderMediaOverlay(true);
+				setZOrderOnTop(true);
+				getHolder().setFormat(PixelFormat.TRANSLUCENT);
+				getHolder().addCallback(VideoView.this);
+			}
+		};
+		addView(subtitleSurface);
+		videoTexture = new TextureView(getContext());
+		videoTexture.setSurfaceTextureListener(this);
+		videoTexture.setVisibility(GONE);
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+		lp.gravity = Gravity.CENTER;
+		addView(videoTexture, lp);
+
+		addInfoView(context);
+		addLoadingSpinner(context);
+		addOnLayoutChangeListener(this);
+		setLayoutParams(new CircularRevealFrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+		setFocusable(true);
+	}
+
+	private void addLoadingSpinner(Context context) {
+		loadingSpinner = new ProgressBar(context, null, android.R.attr.progressBarStyleLarge);
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+		lp.gravity = Gravity.CENTER;
+		loadingSpinner.setLayoutParams(lp);
+		loadingSpinner.setVisibility(GONE);
+		loadingSpinner.setElevation(24f);
+		loadingSpinner.setIndeterminate(true);
+		try {
+			loadingSpinner.getIndeterminateDrawable().setTint(Color.WHITE);
+		} catch (Throwable ignore) {
+		}
+		addView(loadingSpinner);
+	}
+
+	/** Hourglass/spinner over video while the stream is buffering at 0:00. */
+	public void setLoadingVisible(boolean visible) {
+		if (loadingSpinner == null) return;
+		loadingSpinner.setVisibility(visible ? VISIBLE : GONE);
+		if (visible) loadingSpinner.bringToFront();
+	}
+
+	protected void addInfoView(Context context) {
+		VideoInfoView d = new VideoInfoView(context, null);
+		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+		lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+		d.setLayoutParams(lp);
+		addView(d);
+		infoView = d;
+	}
+
+	@Override
+	protected void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		if (subDrawer == null) return;
+		var a = getActivity().peek();
+		if (a != null) a.post(this::drawSubtitles);
+	}
+
+	public SurfaceView getVideoSurface() {
+		return videoSurface;
+	}
+
+	@Nullable
+	public SurfaceView getSubtitleSurface() {
+		return subtitleSurface;
+	}
+
+	public TextureView getVideoTexture() {
+		return videoTexture;
+	}
+
+	public boolean isTextureVideo() {
+		return textureVideo;
+	}
+
+	public void setTextureVideo(boolean textureVideo) {
+		this.textureVideo = textureVideo;
+		if (videoTexture == null) return;
+		videoTexture.setVisibility(textureVideo ? VISIBLE : GONE);
+		videoSurface.setVisibility(textureVideo ? GONE : VISIBLE);
+		if (textureVideo) {
+			if (videoTexture.isAvailable()) completeSurface();
+			else if (createSurface.isDone()) createSurface = new Promise<>();
+		} else if (getVideoSurface().getHolder().getSurface().isValid()) {
+			SurfaceView s = getSubtitleSurface();
+			if ((s == null) || s.getHolder().getSurface().isValid()) completeSurface();
+		}
+	}
+
+	public void setClockPos(int pos) {
+		int gravity = Gravity.TOP;
+
+		switch (pos) {
+			case MainActivityPrefs.CLOCK_POS_NONE -> {
+				if (clockView != null) {
+					removeView(clockView);
+					clockView = null;
+				}
+				return;
+			}
+			case MainActivityPrefs.CLOCK_POS_LEFT -> gravity |= Gravity.START;
+			case MainActivityPrefs.CLOCK_POS_RIGHT -> gravity |= Gravity.END;
+			case MainActivityPrefs.CLOCK_POS_CENTER -> gravity |= Gravity.CENTER;
+		}
+
+		View clock = clockView;
+		FrameLayout.LayoutParams lp;
+
+		if (clock instanceof TextClock) {
+			lp = (FrameLayout.LayoutParams) clock.getLayoutParams();
+		} else {
+			Context ctx = getContext();
+			int m = toIntPx(ctx, 10);
+			clock = LayoutInflater.from(ctx).inflate(R.layout.clock_view, this, false);
+			lp = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+			lp.setMargins(m, m, m, m);
+			addView(clock);
+			clockView = clock;
+		}
+
+		lp.gravity = gravity;
+		clock.setLayoutParams(lp);
+	}
+
+	@Nullable
+	public VideoInfoView getVideoInfoView() {
+		return infoView;
+	}
+
+	public void showVideo(boolean hideTitle) {
+		createSurface.onSuccess(v -> {
+			MainActivityDelegate a = getActivity().peek();
+			if (a == null) return;
+			MediaSessionCallback cb = a.getMediaSessionCallback();
+			MediaEngine eng = cb.getEngine();
+			if (eng != null) setSurfaceSize(eng);
+			VideoInfoView info = getVideoInfoView();
+			if (hideTitle && (info != null)) info.setVisibility(GONE);
+		});
+	}
+
+	public void setMediaSessionSurface(boolean enabled) {
+		if (mediaSessionSurface == enabled) return;
+		mediaSessionSurface = enabled;
+		if (!isSurfaceCreated()) return;
+		getActivity().onSuccess(a -> {
+			if (enabled) {
+				a.getMediaSessionCallback().addVideoView(this, a.isCarActivityNotMirror() ? 0 : 1);
+			} else {
+				a.getMediaSessionCallback().removeVideoView(this);
+			}
+		});
+	}
+
+	public void setSurfaceEngine(@Nullable MediaEngine engine) {
+		surfaceEngine = engine;
+	}
+
+	public void prepareSubDrawer(boolean dbl) {
+		MainActivityDelegate a = getActivity().peek();
+		if (a == null) return;
+		var src = a.getMediaSessionCallback().getCurrentItem();
+		var ps = (src != null) ? src.getPrefs() : a.getLib().getPrefs();
+		var scale = ps.getFloatPref(SUB_SIZE);
+		if (dbl) {
+			if (subDrawer instanceof DoubleSubDrawer && subDrawer.textScale == scale) return;
+			subDrawer = new DoubleSubDrawer(scale);
+		} else {
+			if (subDrawer instanceof GridDrawer && subDrawer.textScale == scale) return;
+			subDrawer = new GridDrawer(scale);
+		}
+	}
+
+	public void releaseSubDrawer() {
+		subDrawer = null;
+	}
+
+	@Override
+	public void accept(SubGrid.Position position, @Nullable Subtitles.Text text) {
+		if (subDrawer == null) return;
+		if (!subDrawer.setText(position, text)) return;
+		drawSubtitles();
+	}
+
+	public void clearVideoSurface() {
+		createSurface.onSuccess(v -> {
+			SurfaceView sv = getVideoSurface();
+			if (sv == null) return;
+			var h = sv.getHolder();
+			var c = h.lockCanvas();
+			try {
+				c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+			} catch (Exception err) {
+				Log.e(err);
+			} finally {
+				h.unlockCanvasAndPost(c);
+			}
+
+			h.removeCallback(this);
+			h.setFormat(PixelFormat.TRANSPARENT);
+			h.setFormat(PixelFormat.OPAQUE);
+			h.addCallback(this);
+		});
+	}
+
+	public void clearSubtitleSurface() {
+		createSurface.onSuccess(v -> {
+			SurfaceView sv = getSubtitleSurface();
+			if (sv == null) return;
+			var h = sv.getHolder();
+			var c = h.lockCanvas();
+			try {
+				c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+			} catch (Exception err) {
+				Log.e(err);
+			} finally {
+				h.unlockCanvasAndPost(c);
+			}
+		});
+	}
+
+	private void drawSubtitles() {
+		createSurface.onSuccess(v -> {
+			SurfaceView sv = getSubtitleSurface();
+			if (sv == null) return;
+			var h = sv.getHolder();
+			var c = h.lockCanvas();
+			var cs = c.save();
+			try {
+				subDrawer.clr(c);
+				subDrawer.draw(c);
+			} catch (Exception err) {
+				Log.e(err);
+			} finally {
+				c.restoreToCount(cs);
+				h.unlockCanvasAndPost(c);
+			}
+		});
+	}
+
+	public void setSurfaceSize(MediaEngine eng) {
+		Log.i("VideoView.setSurfaceSize called, engine=", eng.getClass().getSimpleName());
+		if (eng.setSurfaceSize(this)) {
+			Log.i("VideoView.setSurfaceSize: engine handled it, returning");
+			return;
+		}
+
+		PlayableItem item = eng.getSource();
+		if (item == null) {
+			Log.i("VideoView.setSurfaceSize: item is null, returning");
+			return;
+		}
+
+		int screenWidth = getWidth();
+		int screenHeight = getHeight();
+		if (screenWidth <= 0 || screenHeight <= 0) {
+			Log.i("VideoView.setSurfaceSize: container size zero: ", screenWidth, "x", screenHeight);
+			return;
+		}
+		float screenRatio = (float) screenWidth / screenHeight;
+
+		float videoWidth = eng.getVideoWidth();
+		float videoHeight = eng.getVideoHeight();
+		Log.i("VideoView.setSurfaceSize: container=", screenWidth, "x", screenHeight,
+				" video=", videoWidth, "x", videoHeight);
+
+		int width;
+		int height;
+		int scale = item.getPrefs().getVideoScalePref();
+		Log.i("VideoView.setSurfaceSize: scalePref=", scale,
+				" (0=BEST,1=FILL,2=ORIG,3=4:3,4=16:9)");
+
+		float targetRatio;
+		switch (scale) {
+			case SCALE_4_3:
+				targetRatio = 4f / 3f;
+				break;
+			case SCALE_16_9:
+				targetRatio = 16f / 9f;
+				break;
+			case SCALE_FILL:
+				setVideoTargetSize(screenWidth, screenHeight);
+				return;
+			case SCALE_ORIGINAL:
+				if (videoWidth <= 0 || videoHeight <= 0) {
+					// Dims unknown yet — use 16:9 as default to avoid stretch
+					targetRatio = 16f / 9f;
+					break;
+				}
+				targetRatio = videoWidth / videoHeight;
+				if ((videoWidth > screenWidth) || (videoHeight > screenHeight)) {
+					if (screenRatio > targetRatio) {
+						height = screenHeight;
+						width = (int) (screenHeight * targetRatio);
+					} else {
+						width = screenWidth;
+						height = (int) (screenWidth / targetRatio);
+					}
+				} else {
+					width = (int) videoWidth;
+					height = (int) videoHeight;
+				}
+				setVideoTargetSize(width, height);
+				return;
+			default:
+			case SCALE_BEST:
+				if (videoWidth <= 0 || videoHeight <= 0) {
+					// Dims unknown yet — use 16:9 as default to avoid stretch
+					targetRatio = 16f / 9f;
+					break;
+				}
+				targetRatio = videoWidth / videoHeight;
+				break;
+		}
+
+		// Fit within available area maintaining targetRatio (letterbox/pillarbox)
+		if (screenRatio > targetRatio) {
+			height = screenHeight;
+			width = (int) (screenHeight * targetRatio);
+		} else {
+			width = screenWidth;
+			height = (int) (screenWidth / targetRatio);
+		}
+
+		setVideoTargetSize(width, height);
+	}
+
+	public void setVideoTargetSize(int width, int height) {
+		Log.i("VideoView.setVideoTargetSize: ", width, "x", height,
+				" container=", getWidth(), "x", getHeight());
+		videoTargetWidth = width;
+		videoTargetHeight = height;
+
+		// Update LayoutParams so the layout system positions surfaces correctly
+		SurfaceView surface = getVideoSurface();
+		if (surface != null) {
+			FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) surface.getLayoutParams();
+			lp.width = width;
+			lp.height = height;
+			lp.gravity = Gravity.CENTER;
+			surface.setLayoutParams(lp);
+		}
+
+		TextureView texture = getVideoTexture();
+		if (texture != null) {
+			FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) texture.getLayoutParams();
+			lp.width = width;
+			lp.height = height;
+			lp.gravity = Gravity.CENTER;
+			texture.setLayoutParams(lp);
+		}
+
+		SurfaceView sub = getSubtitleSurface();
+		if (sub != null) {
+			FrameLayout.LayoutParams slp = (FrameLayout.LayoutParams) sub.getLayoutParams();
+			slp.width = width;
+			slp.height = height;
+			slp.gravity = Gravity.CENTER;
+			sub.setLayoutParams(slp);
+		}
+
+		// Log actual surface bounds after next layout pass
+		if (surface != null) {
+			final SurfaceView sv = surface;
+			sv.post(() -> Log.i("VideoView POST-LAYOUT: surface bounds=",
+					sv.getLeft(), ",", sv.getTop(), ",", sv.getRight(), ",", sv.getBottom(),
+					" size=", sv.getWidth(), "x", sv.getHeight(),
+					" lp=", ((FrameLayout.LayoutParams) sv.getLayoutParams()).width, "x",
+					((FrameLayout.LayoutParams) sv.getLayoutParams()).height));
+		}
+	}
+
+	@Override
+	public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+														 int oldTop, int oldRight, int oldBottom) {
+		int w = right - left;
+		int h = bottom - top;
+		int oldW = oldRight - oldLeft;
+		int oldH = oldBottom - oldTop;
+		Log.i("VideoView.onLayoutChange: ", w, "x", h, " old=", oldW, "x", oldH);
+		if (w == oldW && h == oldH) return;
+		FermataApplication.get().getHandler().post(() -> createSurface.onSuccess(s -> {
+			MainActivityDelegate a = getActivity().peek();
+			if (a == null) return;
+			MediaEngine eng = surfaceEngine;
+			if (eng == null) eng = a.getMediaServiceBinder().getCurrentEngine();
+			if (eng == null) return;
+
+			PlayableItem i = eng.getSource();
+			if ((i != null) && i.isVideo()) setSurfaceSize(eng);
+		}));
+	}
+
+	@Override
+	public void surfaceCreated(@NonNull SurfaceHolder holder) {
+		if (textureVideo) return;
+		if (!getVideoSurface().getHolder().getSurface().isValid()) return;
+		SurfaceView s = getSubtitleSurface();
+		if ((s != null) && !s.getHolder().getSurface().isValid()) return;
+		if (mediaSessionSurface) {
+			getActivity().onSuccess(
+					a -> a.getMediaSessionCallback().addVideoView(this, a.isCarActivityNotMirror() ? 0 : 1));
+		}
+		completeSurface();
+		MediaEngine eng = surfaceEngine;
+		if (!mediaSessionSurface && (eng != null)) {
+			FermataApplication.get().getHandler().post(() -> {
+				if (!textureVideo && (surfaceEngine == eng) &&
+						getVideoSurface().getHolder().getSurface().isValid()) {
+					eng.setVideoView(this);
+				}
+			});
+		}
+	}
+
+	@Override
+	public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+		if (textureVideo) return;
+		createSurface = new Promise<>();
+		if (mediaSessionSurface) {
+			getActivity().onSuccess(a -> a.getMediaSessionCallback().removeVideoView(this));
+		}
+	}
+
+	public boolean isSurfaceCreated() {
+		return createSurface.isDone();
+	}
+
+	public void onSurfaceCreated(Runnable run) {
+		createSurface.onSuccess(v -> run.run());
+	}
+
+	@Override
+	public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+	}
+
+	@Override
+	public void onSurfaceTextureAvailable(@NonNull SurfaceTexture surface, int width, int height) {
+		if (!textureVideo) return;
+		completeSurface();
+		MediaEngine eng = surfaceEngine;
+		if (eng != null) FermataApplication.get().getHandler().post(() -> {
+			if (textureVideo && (surfaceEngine == eng)) eng.setVideoView(this);
+		});
+	}
+
+	@Override
+	public void onSurfaceTextureSizeChanged(@NonNull SurfaceTexture surface, int width, int height) {
+		createSurface.onSuccess(v -> {
+			MediaEngine eng = surfaceEngine;
+			if (eng != null) setSurfaceSize(eng);
+		});
+	}
+
+	@Override
+	public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
+		if (textureVideo) createSurface = new Promise<>();
+		return true;
+	}
+
+	@Override
+	public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
+	}
+
+	private void completeSurface() {
+		if (createSurface instanceof Promise<?> p) {
+			createSurface = completedNull();
+			p.complete(null);
+		}
+	}
+
+	@SuppressLint("ClickableViewAccessibility")
+	@Override
+	public boolean onTouchEvent(@NonNull MotionEvent e) {
+		MainActivityDelegate a = getActivity().peek();
+		return (a != null) && a.interceptTouchEvent(e, this::onTouch);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		MainActivityDelegate a;
+		FermataServiceUiBinder b;
+		ControlPanelView p;
+
+		switch (keyCode) {
+			case KEYCODE_ENTER, KEYCODE_DPAD_CENTER -> {
+				if ((a = getActivity().peek()) == null) break;
+				return a.getControlPanel().onTouch(this);
+			}
+			case KEYCODE_DPAD_LEFT, KEYCODE_DPAD_RIGHT -> {
+				if ((a = getActivity().peek()) == null) break;
+				p = a.getControlPanel();
+				if (!p.isVideoSeekMode() && !a.getBody().isVideoMode()) {
+					View v = focusSearch(this, (keyCode == KEYCODE_DPAD_LEFT) ? FOCUS_LEFT : FOCUS_RIGHT);
+					if (v != null) {
+						v.requestFocus();
+						return true;
+					} else {
+						break;
+					}
+				}
+				b = a.getMediaServiceBinder();
+				b.onRwFfButtonClick(keyCode == KEYCODE_DPAD_RIGHT);
+				a.getControlPanel().onVideoSeek();
+				return true;
+			}
+			case KEYCODE_DPAD_UP -> {
+				if ((a = getActivity().peek()) == null) break;
+				b = a.getMediaServiceBinder();
+				b.onRwFfButtonLongClick(true);
+				a.getControlPanel().onVideoSeek();
+				return true;
+			}
+			case KEYCODE_DPAD_DOWN -> {
+				if ((a = getActivity().peek()) == null) break;
+				p = a.getControlPanel();
+				if (!p.isVideoSeekMode() && isVisible(p)) {
+					View v = p.focusSearch();
+					if (v != null) {
+						v.requestFocus();
+						return true;
+					} else {
+						break;
+					}
+				}
+				b = a.getMediaServiceBinder();
+				b.onRwFfButtonLongClick(false);
+				a.getControlPanel().onVideoSeek();
+				return true;
+			}
+		}
+
+		return super.onKeyUp(keyCode, event);
+	}
+
+	private boolean onTouch(@NonNull MotionEvent e) {
+		MainActivityDelegate a = getActivity().peek();
+		if (a == null) return false;
+		a.getControlPanel().onVideoViewTouch(this, e);
+		return true;
+	}
+
+	@Override
+	public void onPreferenceChanged(PreferenceStore store, List<PreferenceStore.Pref<?>> prefs) {
+		if (createSurface.isDone() && !Collections.disjoint(prefChange, prefs)) {
+			MainActivityDelegate a = getActivity().peek();
+			if (a == null) return;
+			MediaEngine eng = a.getMediaSessionCallback().getEngine();
+			if (eng == null) return;
+			PlayableItem i = eng.getSource();
+			if ((i == null) || !i.isVideo()) return;
+
+			if (prefs.contains(MediaPrefs.VIDEO_SCALE)) {
+				setSurfaceSize(eng);
+			} else if (prefs.contains(MediaPrefs.AUDIO_DELAY) ||
+					prefs.contains(MediaPrefs.AUDIO_DELAY_AA)) {
+				eng.setAudioDelay(
+						i.getPrefs().getAudioDelayPref(prefs.contains(MediaPrefs.AUDIO_DELAY_AA)));
+			} else if (prefs.contains(MediaPrefs.SUB_DELAY)) {
+				eng.setSubtitleDelay(i.getPrefs().getSubDelayPref());
+			}
+		}
+	}
+
+	@Override
+	public void onActivityEvent(MainActivityDelegate a, long e) {
+		if (handleActivityDestroyEvent(a, e)) {
+			a.getMediaSessionCallback().removeVideoView(this);
+			a.getLib().getPrefs().removeBroadcastListener(this);
+		}
+	}
+
+	@Override
+	public View focusSearch(View focused, int direction) {
+		MainActivityDelegate a = getActivity().peek();
+		if ((a == null) || !a.getBody().isBothMode()) return focused;
+
+		if (direction == FOCUS_LEFT) {
+			return MediaItemListView.focusSearchActive(getContext(), focused);
+		} else if (direction == FOCUS_RIGHT) {
+			NavBarView n = a.getNavBar();
+			if (n.isRight()) return n.focusSearch();
+		}
+
+		return focused;
+	}
+
+	private FutureSupplier<MainActivityDelegate> getActivity() {
+		return MainActivityDelegate.getActivityDelegate(getContext());
+	}
+
+	private static abstract class SubDrawer {
+		final float textScale;
+		final Paint bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+		SubDrawer(float textScale) {
+			this.textScale = textScale;
+			bgPaint.setColor(Color.BLACK);
+			bgPaint.setAlpha(180);
+		}
+
+		abstract boolean setText(SubGrid.Position position, @Nullable Subtitles.Text text);
+
+		abstract void draw(Canvas canvas);
+
+		void clr(Canvas canvas) {
+			canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+		}
+
+		float textSize(int canvasHeight, int canvasWidth) {
+			var s = textScale * canvasWidth / 25f;
+			return canvasHeight > canvasWidth ? s * canvasHeight / canvasWidth : s;
+		}
+
+		static TextPaint paint(Paint.Align align) {
+			TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+			paint.setColor(Color.WHITE);
+			paint.setTypeface(Typeface.DEFAULT);
+			paint.setElegantTextHeight(true);
+			paint.setTextAlign(align);
+			return paint;
+		}
+
+		static CharSequence text(String text) {
+			var idx = text.indexOf('<');
+			if ((idx == -1) || (text.indexOf('>', idx) == -1)) return text;
+			return fromHtml(text, FROM_HTML_MODE_LEGACY);
+		}
+
+		static StaticLayout layout(CharSequence text, TextPaint paint, int width) {
+			return StaticLayout.Builder.obtain(text, 0, text.length(), paint, width).setMaxLines(10)
+					.setEllipsize(TextUtils.TruncateAt.END).setIncludePad(true).build();
+		}
+
+		void draw(Canvas canvas, StaticLayout sl) {
+			float pad = 20f;
+			float w = 0f;
+			for (int i = 0, n = sl.getLineCount(); i < n; i++) {
+				w = Math.max(w, sl.getLineWidth(i));
+			}
+			w = w / 2f + pad;
+			canvas.translate(0, -pad);
+			canvas.drawRoundRect(-w, -pad, w, sl.getHeight() + pad, pad, pad, bgPaint);
+			sl.draw(canvas);
+		}
+	}
+
+	private static final class GridDrawer extends SubDrawer {
+		private final String[] grid = new String[9];
+		private final TextPaint[] paint = new TextPaint[3];
+		private final float[] yoff = new float[]{1f, 0.5f, 0.f};
+
+
+		private GridDrawer(float textScale) {
+			super(textScale);
+			for (int i = 0; i < 3; i++) {
+				paint[i] =
+						paint(i == 0 ? Paint.Align.LEFT : i == 1 ? Paint.Align.CENTER : Paint.Align.RIGHT);
+			}
+		}
+
+		@Override
+		public boolean setText(SubGrid.Position position, @Nullable Subtitles.Text text) {
+			var t = (text == null) ? null : text.getText();
+			int idx = position.ordinal();
+			if (Objects.equals(grid[idx], t)) return false;
+			grid[idx] = t;
+			return true;
+		}
+
+		@Override
+		public void draw(Canvas canvas) {
+			var ch = canvas.getHeight();
+			var cw = canvas.getWidth();
+			var ts = textSize(ch, cw);
+			var x = new int[]{0, cw / 2, cw};
+			var y = new int[]{ch, ch / 2, 0};
+
+			for (int i = 0, g = 0; i < 3; i++, g += 3) {
+				var l = grid[g] != null;
+				var c = grid[g + 1] != null;
+				var r = grid[g + 2] != null;
+				int[] w = new int[3];
+
+				if (c) {
+					if (l) {
+						if (r) {
+							w[0] = w[1] = w[2] = cw / 3;
+						} else {
+							w[0] = w[1] = cw / 3;
+						}
+					} else if (r) {
+						w[1] = w[2] = cw / 3;
+					} else {
+						w[1] = cw;
+					}
+				} else if (l) {
+					if (r) w[0] = w[2] = cw / 2;
+					else w[0] = cw;
+				} else if (r) {
+					w[2] = cw;
+				} else {
+					continue;
+				}
+
+				for (int j = 0; j < 3; j++) {
+					if (w[j] == 0) continue;
+					var t = text(grid[g + j]);
+					paint[j].setTextSize(ts);
+					var sl = layout(t, paint[j], w[j]);
+					canvas.save();
+					canvas.translate(x[j], y[i] - sl.getHeight() * yoff[i]);
+					draw(canvas, sl);
+					canvas.restore();
+				}
+			}
+		}
+	}
+
+	private static final class DoubleSubDrawer extends SubDrawer {
+		private final TextPaint paint;
+		private boolean center;
+		private String text;
+		private String translation;
+
+		DoubleSubDrawer(float textScale) {
+			super(textScale);
+			paint = paint(Paint.Align.CENTER);
+		}
+
+		@Override
+		boolean setText(SubGrid.Position position, @Nullable Subtitles.Text text) {
+			if (position == SubGrid.Position.BOTTOM_LEFT) {
+				var t = (text == null) ? null : text.getText();
+				if (!center && Objects.equals(this.text, t)) return false;
+				center = false;
+				this.text = t;
+			} else if (position == SubGrid.Position.BOTTOM_RIGHT) {
+				var t = (text == null) ? null : text.getText();
+				if (!center && Objects.equals(translation, t)) return false;
+				center = false;
+				translation = t;
+			} else {
+				center = true;
+				var t = (text == null) ? null : text.getText();
+				var trans = (text == null) ? null : text.getTranslation();
+				var c = position != SubGrid.Position.BOTTOM_CENTER;
+				if (center == c && Objects.equals(this.text, t) && Objects.equals(translation, trans))
+					return false;
+				center = c;
+				this.text = t;
+				translation = trans;
+			}
+			return true;
+		}
+
+		@Override
+		void draw(Canvas canvas) {
+			CharSequence sub;
+			int start;
+			int end;
+
+			if (text != null) {
+				if (translation != null) {
+					var t = text(text).toString();
+					sub = t + '\n' + text(translation);
+					start = t.length() + 1;
+					end = sub.length();
+				} else {
+					sub = text(text).toString();
+					start = end = 0;
+				}
+			} else if (translation != null) {
+				sub = text(translation).toString();
+				start = 0;
+				end = sub.length();
+			} else {
+				return;
+			}
+
+			if (start != end) {
+				var st = new SpannableString(sub);
+				st.setSpan(new ForegroundColorSpan(Color.RED), start, end, SPAN_EXCLUSIVE_EXCLUSIVE);
+				sub = st;
+			}
+
+			var ch = canvas.getHeight();
+			var cw = canvas.getWidth();
+			var x = cw / 2f;
+
+			if (center) {
+				float size = (ch > cw) ? cw / 10f : ch / 5f;
+				for (; ; ) {
+					paint.setTextSize(size);
+					var sl = layout(sub, paint, cw);
+					var sh = sl.getHeight();
+					if (sh < ch) {
+						canvas.translate(x, (ch - sl.getHeight()) / 2f);
+						draw(canvas, sl);
+						break;
+					} else {
+						size *= 0.9f;
+					}
+				}
+			} else {
+				paint.setTextSize(textSize(ch, cw));
+				var sl = layout(sub, paint, cw);
+				canvas.translate(x, ch - sl.getHeight());
+				draw(canvas, sl);
+			}
+		}
+	}
+}

@@ -1,0 +1,123 @@
+if (gradle.ext.enableGoogleServices) apply plugin: 'com.google.gms.google-services'
+
+android {
+    defaultConfig {
+        namespace 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs'
+        def defaultAppId = 'me.aap.fermatamod.dear.google.why.bingo5'
+        applicationId defaultAppId
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+        base.archivesName = "fermata-free-$versionName"
+
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters = gradle.ext.abiFilters
+        }
+    }
+
+    if (localProps['storeFile'] != null) {
+        signingConfigs {
+            release {
+                storeFile file(localProps["storeFile"])
+                storePassword localProps["storePassword"]
+                keyAlias localProps["keyAlias"]
+                keyPassword localProps["keyPassword"]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            resValue "string", "app_name_auto", "@string/app_name_auto_release"
+            resValue "string", "app_name_mobile", "@string/app_name_mobile_release"
+            resValue "string", "media_service_name_auto", "@string/media_service_name_auto_release"
+            resValue "string", "media_service_name_mobile", "@string/media_service_name_mobile_release"
+            resValue "string", "mirror_service_name", "@string/mirror_service_name_release"
+            resValue "string", "mirror_fs_service_name", "@string/mirror_fs_service_name_release"
+            resValue "string", "play_fs_service_name", "@string/play_fs_service_name_release"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    '../proguard-rules.pro', '../depends/utils/proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", 'D', 'false'
+        }
+
+        debug {
+            debuggable true
+            resValue "string", "app_name_auto", "@string/app_name_auto_debug"
+            resValue "string", "app_name_mobile", "@string/app_name_mobile_debug"
+            resValue "string", "media_service_name_auto", "@string/media_service_name_auto_debug"
+            resValue "string", "media_service_name_mobile", "@string/media_service_name_mobile_debug"
+            resValue "string", "mirror_service_name", "@string/mirror_service_name_debug"
+            resValue "string", "mirror_fs_service_name", "@string/mirror_fs_service_name_debug"
+            resValue "string", "play_fs_service_name", "@string/play_fs_service_name_debug"
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", 'D', 'true'
+        }
+    }
+
+    flavorDimensions += "version"
+
+    productFlavors {
+        mobile {
+            dimension "version"
+            resValue "string", "app_name", "@string/app_name_mobile"
+            resValue "string", "media_service_name", "@string/media_service_name_mobile"
+            resValue "drawable", "media_service_icon", "@drawable/launcher"
+            buildConfigField "boolean", 'AUTO', 'false'
+            buildConfigField "boolean", 'ENABLE_GS', "${gradle.ext.enableGoogleServices}"
+        }
+
+        auto {
+            dimension "version"
+            applicationIdSuffix project.getProperties().getOrDefault('APP_ID_SFX', '')
+            resValue "string", "app_name", "@string/app_name_auto"
+            resValue "string", "media_service_name", "@string/media_service_name_auto"
+            resValue "drawable", "media_service_icon", "@drawable/media_service"
+            buildConfigField "boolean", 'AUTO', 'true'
+            buildConfigField "boolean", 'ENABLE_GS', "${gradle.ext.enableGoogleServices}"
+
+            dependencies {
+                implementation files('lib/auto/aauto.aar')
+                implementation "androidx.car.app:app-projected:1.7.0"
+                compileOnly files('lib/auto/xposed-api-82.jar')
+            }
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0']
+        }
+    }
+    dynamicFeatures.addAll(gradle.ext.modules)
+
+    namespace 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs'
+}
+
+
+
+dependencies {
+    implementation project(':utils')
+    implementation "androidx.media:media:${ANDROIDX_MEDIA_VERSION}"
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    implementation "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
+    implementation "androidx.constraintlayout:constraintlayout:${ANDROIDX_CONSTRAINTLAYOUT_VERSION}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${ANDROIDX_SWIPEREFRESHLAYOUT_VERSION}"
+    implementation "com.google.android.play:feature-delivery:${ANDROID_PLAY_CORE_FD_VERSION}"
+    implementation 'com.google.android.play:asset-delivery:2.3.0'
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'androidx.tvprovider:tvprovider:1.1.0'
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation "androidx.car.app:app:1.7.0"
+    implementation "androidx.legacy:legacy-support-core-utils:1.0.0"
+    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.1.0"
+    implementation "com.google.android.datatransport:transport-api:4.0.0"
+    implementation "com.google.android.datatransport:transport-backend-cct:4.0.0"
+    implementation "com.google.android.datatransport:transport-runtime:4.0.0"
+    implementation "com.google.firebase:firebase-encoders-json:18.0.1"
+    implementation "com.google.firebase:firebase-encoders:17.0.0"
+    implementation "javax.inject:javax.inject:1"
+    implementation "com.google.zxing:core:3.5.3"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+}

@@ -1,0 +1,141 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="androidx.car.app.ACCESS_SURFACE" />
+    <uses-permission android:name="androidx.car.app.NAVIGATION_TEMPLATES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
+
+
+    <application
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/launcher"
+        android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Android Auto hooks" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="54" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/xposedscope" />
+        <meta-data
+            android:name="androidx.car.app.minCarApiLevel"
+            android:value="5"
+            tools:ignore="MetadataTagInsideApplicationTag" />
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.CarService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            tools:ignore="ExportedService">
+            <meta-data
+                android:name="androidx.car.app.minCarApiLevel"
+                android:value="5" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION" />
+                <category android:name="com.google.android.gms.car.category.CATEGORY_PROJECTION_OEM" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.MirrorService"
+            android:exported="true"
+            android:icon="@drawable/mirror"
+            android:label="@string/mirror_service_name"
+            tools:ignore="ExportedService" />
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.MirrorServiceFS"
+            android:exported="true"
+            android:icon="@drawable/mirror_fs"
+            android:label="@string/mirror_fs_service_name"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.NAVIGATION" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.ProjectionActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.LauncherActivity"
+            android:configChanges="colorMode|keyboard|keyboardHidden|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance" />
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.ProjectionService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.AccessibilityEventDispatcherService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility" />
+        </service>
+
+        <service
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.XposedEventDispatcherService"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <!-- Auto start MediaService when connected to bluetooth (AA?) -->
+        <receiver
+            android:name="me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.auto.MediaServiceStarter"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

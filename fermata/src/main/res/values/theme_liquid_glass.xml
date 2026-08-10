@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme.LiquidGlass">
+        <item name="android:colorBackground">#24101E32</item>
+        <item name="android:windowBackground">@drawable/liquid_glass_wallpaper_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">#B812233A</item>
+        <item name="android:statusBarColor">#8F10243D</item>
+
+        <item name="colorPrimaryDark">#B812233A</item>
+        <item name="colorPrimary">#70142642</item>
+        <item name="colorOnPrimary">#E9FBFF</item>
+        <item name="android:textColorPrimary">#FFFFFFFF</item>
+
+        <item name="colorSecondary">#48152B46</item>
+        <item name="colorOnSecondary">#F4FCFF</item>
+        <item name="android:textColorSecondary">#F2FFFFFF</item>
+        <item name="boxStrokeColor">#70FFFFFF</item>
+
+        <item name="alpha">1</item>
+        <item name="colorSecondaryVariant">#CC008FC9</item>
+        <item name="android:textColorTertiary">#FFFFFFFF</item>
+
+        <item name="colorSurface">#D01A2E47</item>
+        <item name="colorOnSurface">#FFFFFFFF</item>
+        <item name="colorPrimarySurface">#D0204264</item>
+        <item name="colorOnPrimarySurface">#FFFFFFFF</item>
+
+        <item name="colorAccent">#36D6FF</item>
+        <item name="rippleColor">#6636D6FF</item>
+        <item name="android:textColorHint">#C4D7E5EF</item>
+        <item name="colorControlNormal">#D6FFFFFF</item>
+        <item name="colorControlActivated">#36D6FF</item>
+
+        <item name="cornerRadius">16dp</item>
+        <item name="appShellBackground">@drawable/liquid_glass_wallpaper_background</item>
+        <item name="appContentBackground">@android:color/transparent</item>
+        <item name="appPanelBackground">@drawable/liquid_glass_panel</item>
+        <item name="appCardBackground">@drawable/liquid_glass_card_ripple</item>
+        <item name="isLiquidGlassTheme">true</item>
+
+        <item name="toolbarStyle">@style/AppTheme.LiquidGlass.ToolBarStyle</item>
+        <item name="bottomNavigationStyle">@style/AppTheme.LiquidGlass.NavBarStyle</item>
+        <item name="popupMenuStyle">@style/AppTheme.LiquidGlass.PopupMenuStyle</item>
+        <item name="appControlPanelStyle">@style/AppTheme.LiquidGlass.ControlPanelStyle</item>
+        <item name="appMediaItemStyle">@style/AppTheme.LiquidGlass.MediaItemStyle</item>
+        <item name="materialAlertDialogTheme">@style/AppTheme.LiquidGlass.AlertDialog</item>
+        <item name="preferenceItemBackground">@drawable/liquid_glass_card_ripple</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.ToolBarStyle" parent="Theme.Utils.Base.ToolBarStyle">
+        <item name="surfaceBackground">@drawable/liquid_glass_panel</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.NavBarStyle" parent="Theme.Utils.Base.NavBarStyle">
+        <item name="surfaceBackground">@drawable/liquid_glass_panel</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.PopupMenuStyle" parent="Theme.Utils.Base.PopupMenuStyle">
+        <item name="surfaceBackground">@drawable/liquid_glass_panel_strong</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.ControlPanelStyle" parent="AppTheme.ControlPanelStyle">
+        <item name="surfaceBackground">@drawable/liquid_glass_panel</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.MediaItemStyle" parent="AppTheme.MediaItemStyle">
+        <item name="android:textColor">@color/media_item_text_color</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.AlertDialog" parent="Theme.Utils.Base.AlertDialog">
+        <item name="colorSurface">#E31A304B</item>
+        <item name="colorOnSurface">#FFFFFFFF</item>
+        <item name="shapeAppearanceMediumComponent">@style/AppTheme.LiquidGlass.DialogShape</item>
+    </style>
+
+    <style name="AppTheme.LiquidGlass.DialogShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+</resources>

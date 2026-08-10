@@ -1,0 +1,377 @@
+<resources>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    <string name="addons">Dodaci</string>
+    <string name="addon_name_tv">TV</string>
+    <string name="addon_name_web_browser">Web preglednik</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <string name="interface_prefs">Sučelje</string>
+    <string name="interface_prefs_aa">Android Auto</string>
+    <string name="playback_settings">Postavke reprodukcije</string>
+    <string name="playback_control">Kontrola reprodukcije</string>
+    <string name="engine_prefs">Multimedija</string>
+
+    <string name="theme">Tema aplikacije</string>
+    <string name="theme_sub">Trenutna tema: %1$s</string>
+    <string name="theme_light">Svijetla</string>
+    <string name="theme_dark">Tamna</string>
+    <string name="theme_system">Sistem</string>
+    <string name="theme_black">Crna</string>
+    <string name="theme_star_wars">Ratovi zvijezda</string>
+    <string name="theme_purple">Ljubičasta</string>
+    <string name="theme_classic">klasična</string>
+
+    <string name="nav_bar_pos">Pozicija navigacijske trake</string>
+    <string name="nav_bar_pos_sub">Trenutna pozicija: %1$s</string>
+    <string name="nav_bar_pos_bottom">Dolje</string>
+    <string name="nav_bar_pos_left">Lijevo</string>
+    <string name="nav_bar_pos_right">Desno</string>
+
+    <string name="show_track_icons">Prikaži ikone trake</string>
+    <string name="lang">Jezik</string>
+    <string name="trans_lang">Jezik prijevoda</string>
+    <string name="hide_bars">Sakrij trake</string>
+    <string name="hide_bars_sub">Sakrij gornje i donje trake kada se pojavi kontrolna ploča</string>
+    <string name="show_pg_up_down">Prikaži gumbe za stranicu gore/dolje</string>
+    <string name="use_dpad_cursor">Koristi pokazivač za navigaciju s D-pada</string>
+    <string name="fullscreen_mode">Puni zaslon</string>
+    <string name="nav_bar_size">Veličina navigacijske trake</string>
+    <string name="tool_bar_size">Veličina alatne trake</string>
+    <string name="control_panel_size">Veličina kontrolne ploče</string>
+    <string name="text_icon_size">Veličina teksta i ikona</string>
+    <string name="subtitles_size">Veličina titlova</string>
+
+    <string name="key_bindings">Tipkovni prečaci</string>
+    <string name="key_on_click">Na klik</string>
+    <string name="key_on_long_click">Na dugi klik</string>
+    <string name="key_on_dbl_click">Na dvostruki klik</string>
+    <string name="action_stop">Zaustavi</string>
+    <string name="action_play">Pokreni</string>
+    <string name="action_pause">Pauziraj</string>
+    <string name="action_play_pause">Pokreni/Pauziraj</string>
+    <string name="action_prev">Pusti prethodno</string>
+    <string name="action_next">Pusti sljedeće</string>
+    <string name="action_rw">Premotaj unatrag</string>
+    <string name="action_ff">Premotaj unaprijed</string>
+    <string name="action_vol_up">Pojačaj zvuk</string>
+    <string name="action_vol_down">Smanji zvuk</string>
+    <string name="action_vol_mute_unmute">Utišaj/Uključi zvuk</string>
+    <string name="action_activate_voice_ctrl">Aktiviraj glasovnu kontrolu</string>
+    <string name="action_menu">Izbornik</string>
+    <string name="action_cp_menu">Izbornik kontrolne ploče</string>
+    <string name="action_back_or_exit">Natrag ili izlaz</string>
+    <string name="action_exit">Izlaz</string>
+    <string name="action_default">Zadano</string>
+    <string name="action_none">Ništa</string>
+
+    <string name="play_next_on_completion">Pusti sljedeću po završetku</string>
+
+    <string name="rw_ff_click">RW/FF - klik</string>
+    <string name="rw_ff_long_click">RW/FF - dugi klik</string>
+    <string name="prev_next_long_click">Prethodno/Sljedeće - dugi klik</string>
+    <string name="play_pause_stop">Zaustavi na dugi klik Pokreni/Pauziraj</string>
+
+    <string name="time">Vrijeme</string>
+    <string name="time_unit">Jedinica vremena</string>
+    <string name="time_unit_sub">Trenutna vrijednost: %1$s</string>
+    <string name="time_unit_second">Sekunda</string>
+    <string name="time_unit_minute">Minuta</string>
+    <string name="time_unit_percent">Postotak</string>
+
+    <string name="video_control">Kontrola videa</string>
+    <string name="video_control_start_delay">Prikaži na početku</string>
+    <string name="video_control_touch_delay">Prikaži na dodir</string>
+    <string name="video_control_seek_delay">Prikaži pri pretraživanju</string>
+    <string name="video_aa_show_status">Prikaži statusnu traku u Android Auto</string>
+
+    <string name="enable_exoplayer">Omogući ExoPlayer</string>
+    <string name="enable_vlcplayer">Omogući VLC</string>
+    <string name="preferred_audio_engine">Preferirani audio player</string>
+    <string name="preferred_video_engine">Preferirani video player</string>
+    <string name="engine_installed">Instaliran medijski player: %1$s</string>
+    <string name="engine_uninstalled">Deinstaliran medijski player: %1$s</string>
+
+    <string name="preferred_media_scanner">Preferirani medij skener</string>
+    <string name="preferred_media_scanner_default">Zadano</string>
+    <string name="preferred_media_scanner_system">Sustav</string>
+
+    <string name="voice_search">Pretraga glasom</string>
+    <string name="voice_control">Glasovna kontrola</string>
+    <string name="voice_control_fb">Plutajući gumb</string>
+    <string name="voice_control_sub_long">Aktiviraj glasovnu kontrolu dugim pritiskom</string>
+    <string name="voice_control_subst">Zamjena riječi</string>
+    <string name="voice_control_subst_sub">Zamijenite riječ s drugom riječi ili frazom</string>
+    <string name="voice_control_subst_hint">uključeno: play\nisključeno: pauza</string>
+
+    <string name="module_installation">Instalacija modula: %1$s</string>
+    <string name="install_pending">Čekanje instalacije: %1$s</string>
+    <string name="downloading">Preuzimanje %1$s</string>
+    <string name="installing">Instaliranje %1$s</string>
+
+    <string name="speed">Brzina</string>
+    <string name="audio_effects">Audio efekti</string>
+    <string name="equalier">Izjednačivač</string>
+    <string name="preset_name">Ime predloška</string>
+    <string name="virtualizer">Virtualizator</string>
+    <string name="auto">Automatski</string>
+    <string name="binaural">Binauralno</string>
+    <string name="transaural">Transauralno</string>
+    <string name="bass_boost">Pojačivač basa</string>
+    <string name="vol_boost">Pojačivač glasnoće</string>
+    <string name="strength">Snaga</string>
+    <string name="apply_to">Primijeni na</string>
+
+    <string name="video">Video</string>
+    <string name="video_settings">Postavke videa</string>
+    <string name="video_scaling">Prilagodba videa</string>
+    <string name="hw_accel">Hardversko ubrzanje</string>
+    <string name="hw_accel_auto">Auto</string>
+    <string name="hw_accel_full">Puno</string>
+    <string name="hw_accel_decoding">Dekodiranje</string>
+    <string name="hw_accel_disabled">Onemogućeno</string>
+    <string name="video_scaling_best">Najbolje prilagođeno</string>
+    <string name="video_scaling_fill">Cijeli zaslon</string>
+    <string name="video_scaling_orig">Originalna veličina</string>
+    
+    
+
+    <string name="audio">Audio</string>
+    <string name="audio_delay">Zakašnjenje zvuka</string>
+    <string name="audio_delay_aa">Zakašnjenje zvuka - Android Auto</string>
+    <string name="preferred_audio_lang">Preferirani jezici audio zapisa</string>
+    <string name="preferred_audio_key">Preferiraj audio zapis s ključnim riječima</string>
+    <string name="select_audio_stream">Odaberi audio zapis</string>
+
+    <string name="subtitles">Titlovi</string>
+    <string name="subtitles_auto">Automatski generirano</string>
+    <string name="subtitle_delay">Zakašnjenje titlova</string>
+    <string name="display_subtitles">Prikaži titlove</string>
+    <string name="preferred_sub_lang">Preferirani jezici titlova</string>
+    <string name="preferred_sub_key">Preferiraj titlove s ključnim riječima</string>
+    <string name="select_subtitles">Odaberi titlove</string>
+
+    <string name="sub_gen_buf">Duljina međuspremnika</string>
+    <string name="sub_gen_buf_sub">Prethodno učitaj unaprijed određeni broj sekundi</string>
+    <string name="sub_gen_chunk">Duljina komada</string>
+    <string name="sub_gen_chunk_sub">Obradite međuspremnik u dijelovima određenog trajanja</string>
+    <string name="sub_gen_model">Model</string>
+    <string name="sub_gen_translate">Prevesti</string>
+    <string name="sub_gen_use_gpu">Korištenje GPU-a</string>
+    <string name="sub_gen_single">Pojedinačni segment</string>
+    <string name="sub_gen_single_sub">Prepišite cijeli dio kao jedan segment</string>
+    <string name="sub_gen_downloading">Pričekajte dok se model ne preuzme.</string>
+    <string name="sub_gen_download_fail">Nije uspjelo preuzimanje modela: %s!</string>
+    <string name="sub_gen_cleanup">Izbrišite ostale preuzete modele iz predmemorije</string>
+    <string name="sub_gen_cleanup_done">Izbrisano: %s</string>
+
+    
+    <string name="eq_hz">%1$s Hz</string>
+    <string name="eq_khz">%1$s kHz</string>
+
+    <string name="current_track">Trenutna pjesma</string>
+    <string name="current_folder">Trenutna mapa</string>
+
+    <string name="folders">Mape</string>
+    <string name="favorites">Favoriti</string>
+    <string name="playlists">Popisi za reprodukciju</string>
+    <string name="search">Pretraži</string>
+    <string name="filter">Filter</string>
+    <string name="settings">Postavke</string>
+    <string name="menu">Izbornik</string>
+    <string name="exit">Izlaz</string>
+    <string name="cancel">Odustani</string>
+    <string name="got_to_current">Trenutna pjesma</string>
+
+    <string name="view">Pogled</string>
+    <string name="title">Naziv</string>
+    <string name="subtitle">Podnaslov</string>
+    <string name="seq_num">Redni broj</string>
+    <string name="track_name">Naziv pjesme</string>
+    <string name="file_name">Naziv datoteke</string>
+    <string name="date">Datum</string>
+    <string name="random">Nasumično</string>
+    <string name="descending">Silazno</string>
+    <string name="album">Album</string>
+    <string name="artist">Izvođač</string>
+    <string name="duration">Trajanje</string>
+
+    <string name="sort_by">Sortiraj prema</string>
+    <string name="do_not_sort">Ne sortiraj</string>
+
+    <string name="play">Reproduciraj</string>
+    <string name="pause">Pauziraj</string>
+    <string name="stop">Zaustavi</string>
+    <string name="prev">Prethodna</string>
+    <string name="next">Sljedeća</string>
+    <string name="rewind">Premotaj unatrag</string>
+    <string name="fast_forward">Premotaj unaprijed</string>
+    <string name="repeat">Ponovi</string>
+    <string name="repeat_disable">Ne ponavljaj</string>
+    <string name="shuffle">Slučajni odabir</string>
+    <string name="shuffle_disable">Isključi slučajni odabir</string>
+    <string name="programme_guide">Vodič programa</string>
+    <string name="favorites_add">Dodaj u favorite</string>
+    <string name="favorites_remove">Ukloni iz favorita</string>
+    <string name="mark_watched">Označi kao pogledano</string>
+    <string name="mark_unwatched">Označi kao nepogledano</string>
+    <string name="preferred_media_engine">Preferirani medijski motor</string>
+    <string name="by_default">Prema zadanim postavkama</string>
+
+    <string name="playlist_add">Dodaj u popis za reprodukciju</string>
+    <string name="playlist_remove_item">Ukloni iz popisa za reprodukciju</string>
+    <string name="playlist_create">Stvori popis za reprodukciju</string>
+    <string name="playlist_remove">Ukloni popis za reprodukciju</string>
+    <string name="playlist_name">Naziv popisa za reprodukciju</string>
+
+    <string name="bookmarks">Oznake</string>
+    <string name="create_bookmark">Stvori oznaku</string>
+    <string name="remove_bookmark">Ukloni oznaku</string>
+    <string name="remove_all_bookmarks">Ukloni sve oznake</string>
+    <string name="bookmark_name">Naziv</string>
+    <string name="bookmark_time">Vrijeme</string>
+
+    <string name="folder_subtitle">Datoteke: %1$d. Mape: %2$d.</string>
+    <string name="browsable_subtitle">Pjesme: %1$d.</string>
+    <string name="add_folder">Dodaj mapu</string>
+    <string name="remove_folder">Ukloni mapu</string>
+    <string name="select">Odaberi</string>
+    <string name="select_all">Odaberi sve</string>
+    <string name="unselect_all">Poništi odabir svih</string>
+    <string name="refresh">Osvježi</string>
+    <string name="rescan">Ponovno skeniranje</string>
+    <string name="share">Dijeli</string>
+    <string name="edit">Uredi</string>
+    <string name="delete">Izbriši</string>
+    <string name="delete_confirm">Izbriši %1$s?</string>
+    <string name="delete_file_title">Izbriši datoteku</string>
+    <string name="delete_file_question">Jeste li sigurni da želite izbrisati datoteku?</string>
+    <string name="delete_file_failed">Nije uspjelo brisanje datoteke %1$s</string>
+    <string name="loading">Učitavanje…</string>
+    <string name="press_back_again">Pritisnite tipku za povratak ponovno kako biste izašli.</string>
+    <string name="please_restart_app">Molimo ponovno pokrenite aplikaciju.</string>
+    <string name="use_phone_to_grant_perm">Molimo koristite svoj telefon za dodjelu potrebnih dozvola.</string>
+
+    <string name="vfs_content">Sadržaj</string>
+    <string name="vfs_file_system">Datotečni sustav</string>
+    <string name="vfs_gdrive">Google Drive</string>
+    
+    
+    <string name="m3u_playlist">M3U popis za reprodukciju</string>
+    <string name="m3u_playlist_name">Naziv</string>
+    <string name="m3u_playlist_location">Lokacija</string>
+    <string name="m3u_playlist_location_hint">Datoteka ili http(s) URL</string>
+    
+    
+    <string name="m3u_playlist_video">Popis za reprodukciju videa</string>
+
+    <string name="eq_manual">Ručno</string>
+    <string name="eq_normal">Normalno</string>
+    <string name="eq_classical">Klasično</string>
+    <string name="eq_dance">Plesno</string>
+    <string name="eq_flat">Ravno</string>
+    <string name="eq_folk">Folk</string>
+    <string name="eq_heavy_metal">Heavy Metal</string>
+    <string name="eq_hip_hop">Hip Hop</string>
+    <string name="eq_jazz">Jazz</string>
+    <string name="eq_pop">Pop</string>
+    <string name="eq_rock">Rock</string>
+
+    <string name="host">Poslužitelj</string>
+    <string name="port">Port</string>
+    <string name="path">Putanja</string>
+    <string name="share_name">Ime dijeljenja</string>
+    <string name="domain">Domena</string>
+    <string name="username">Korisničko ime</string>
+    <string name="password">Lozinka</string>
+    <string name="private_key">Privatni ključ</string>
+    <string name="private_key_pass">Lozinka privatnog ključa</string>
+
+    <string name="timer">Tajmer</string>
+    <string name="hours">Sati</string>
+    <string name="minutes">Minute</string>
+
+    <string name="enable">Omogući</string>
+    <string name="move_left">Pomakni lijevo</string>
+    <string name="move_right">Pomakni desno</string>
+    <string name="move_up">Pomakni gore</string>
+    <string name="move_down">Pomakni dolje</string>
+
+    <string name="sys_bars_on_video_touch">Prikaži sistemske trake na dodir videa</string>
+    <string name="play_video_landscape">Reprodukcija videa u horizontalnom načinu</string>
+    <string name="clock_pos">Pozicija sata</string>
+    <string name="clock_pos_none">Ništa</string>
+    <string name="clock_pos_left">Lijevo</string>
+    <string name="clock_pos_right">Desno</string>
+    <string name="clock_pos_center">Središnje</string>
+    <string name="change_brightness">Promjena svjetline tijekom reprodukcije videa</string>
+    <string name="video_brightness">Svjetlina videa</string>
+    <string name="change_brightness_sub">Svjetlina se također može mijenjati pomoću dva prsta za pomicanje</string>
+    <string name="watched_threshold">Prag gledanosti</string>
+    <string name="watched_threshold_sub">Označi video kao gledan, ako je više od ovog postotka pregledano</string>
+
+    <string name="other">Ostalo</string>
+    <string name="check_updates">Provjeri ažuriranja prilikom pokretanja</string>
+    <string name="update">Ažuriraj</string>
+    <string name="update_question">Nova verzija %1$s je dostupna.\nŽelite li ažurirati aplikaciju?</string>
+    <string name="export_prefs">Izvezi postavke u datoteku</string>
+    <string name="export_prefs_sub">Izvezi postavke, mape, popise za reprodukciju itd. u datoteku</string>
+    <string name="export_prefs_ok">Postavke su spremljene u datoteku %1$s.</string>
+    <string name="export_prefs_failed">Neuspjelo izvođenje postavki: %1$s</string>
+    <string name="import_prefs">Uvezi postavke iz datoteke</string>
+    <string name="import_prefs_sub">Uvezi ranije izvezene postavke iz datoteke</string>
+    <string name="import_prefs_ok">Postavke su uspješno uvezene.\nMolimo ponovno pokrenite aplikaciju.</string>
+    <string name="import_prefs_failed">Neuspjelo uvođenje postavki: %1$s</string>
+    <string name="prefs_not_found">Nema pronađenih postavki</string>
+    <string name="open_log">Otvori zapisnik</string>
+    <string name="unlock_phone_and_grant">Otključajte telefon i dodijelite tražene dozvole.</string>
+    <string name="screen_capture_rejected">Zahtjev za snimanje zaslona odbijen.</string>
+    <string name="accessibility_dsc">Usluga pristupačnosti koristi se od strane Fermata Mirror za simuliranje događaja na zaslonu osjetljivom na dodir.</string>
+    <string name="media_projection_action_text">Započni sada</string>
+
+    <string name="about"> O programu</string>
+    <string name="about_html"><![CDATA[<H1 align="center">Fermata Media Player</H1>
+<p>Fermata Media Player" je besplatni, otvorenokodni audio i video player s jednostavnim i intuitivnim sučeljem.</p>
+<p><b>Verzija:</b> %1$s (%2$d)</p>
+<p><b>Početna strancia:</b> <a href="%3$s">%3$s</a></p>
+]]></string>
+
+    <string name="err_failed_to_play">Nije uspjelo reproduciranje %s</string>
+    <string name="err_failed_to_play_cause">Nije uspjelo reproduciranje %1$s: %2$s</string>
+    <string name="err_unsupported_source_type">Nepodržani tip izvora: %s</string>
+    <string name="err_playlist_exists">Popis za reprodukciju već postoji: %1$s</string>
+    <string name="err_invalid_playlist_name">Neispravno ime popisa za reprodukciju: %1$s</string>
+    <string name="err_failed_add_folder">Nije uspjelo dodavanje mape: %1$s</string>
+    <string name="err_failed_open_url">Nije uspjelo otvaranje URL-a: %1$s</string>
+    <string name="err_failed_install_module">Nije uspjelo instaliranje modula: %1$s</string>
+    <string name="err_failed_to_download">Nije uspjelo preuzimanje %1$s</string>
+    <string name="err_no_audio_record_perm">Dozvola za snimanje zvuka nije odobrena</string>
+</resources>

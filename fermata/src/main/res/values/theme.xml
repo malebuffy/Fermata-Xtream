@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <attr name="appMediaItemStyle" format="reference" />
+    <attr name="appControlPanelStyle" format="reference" />
+    <attr name="appSeekBarStyle" format="reference" />
+    <attr name="appEqualizerStyle" format="reference" />
+    <attr name="appStreamProgressStyle" format="reference" />
+    <attr name="appVideoInfoStyle" format="reference" />
+    <attr name="appShellBackground" format="reference|color" />
+    <attr name="appContentBackground" format="reference|color" />
+    <attr name="appPanelBackground" format="reference|color" />
+    <attr name="appCardBackground" format="reference|color" />
+    <attr name="isLiquidGlassTheme" format="boolean" />
+
+    <style name="AppTheme" parent="Theme.Utils.Base">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
+        <item name="android:isLightTheme" tools:targetApi="q">false</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:windowBackground">@drawable/app_background</item>
+        <item name="appMediaItemStyle">@style/AppTheme.MediaItemStyle</item>
+        <item name="appControlPanelStyle">@style/AppTheme.ControlPanelStyle</item>
+        <item name="appSeekBarStyle">@style/AppTheme.SeekBarStyle</item>
+        <item name="appEqualizerStyle">@style/AppTheme.EqualizerStyle</item>
+        <item name="appStreamProgressStyle">@style/AppTheme.StreamProgressStyle</item>
+        <item name="appVideoInfoStyle">@style/AppTheme.VideoInfoStyle</item>
+        <item name="appShellBackground">?attr/colorPrimary</item>
+        <item name="appContentBackground">?android:attr/colorBackground</item>
+        <item name="appPanelBackground">?attr/colorPrimary</item>
+        <item name="appCardBackground">@drawable/media_item_bg</item>
+        <item name="isLiquidGlassTheme">false</item>
+        <item name="cornerRadius">5dp</item>
+    </style>
+
+    <style name="AppTheme.MediaItemStyle">
+        <item name="iconColor">?attr/colorOnSecondary</item>
+        <item name="hintColor">@android:color/holo_green_light</item>
+        <item name="titleTextAppearance">?attr/textAppearanceListItem</item>
+        <item name="subtitleTextAppearance">?attr/textAppearanceCaption</item>
+        <item name="android:textColor">@color/media_item_text_color</item>
+        <item name="tint">@color/media_item_tint</item>
+        <item name="indicatorColor">@color/media_item_tint</item>
+        <item name="elevation">20dp</item>
+    </style>
+
+    <style name="AppTheme.ControlPanelStyle">
+        <item name="size">70dp</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+        <item name="android:colorBackground">?attr/colorPrimary</item>
+        <item name="textAppearance">@style/AppTheme.ControlPanelTextAppearance</item>
+    </style>
+
+    <style name="AppTheme.ControlPanelTextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="AppTheme.SeekBarStyle">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:thumbTint">?attr/colorOnPrimary</item>
+        <item name="android:progressTint">?attr/colorOnPrimary</item>
+        <item name="android:secondaryProgressTint">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.EqualizerStyle">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="tint">?attr/colorOnSecondary</item>
+    </style>
+
+    <style name="AppTheme.VideoInfoStyle">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.StreamProgressStyle">
+        <item name="indicatorColor">#FFD600</item>
+        <item name="trackColor">?attr/colorSecondary</item>
+        <item name="trackCornerRadius">2dp</item>
+    </style>
+
+</resources>

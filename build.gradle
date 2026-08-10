@@ -1,0 +1,214 @@
+ext {
+    VERSION_CODE = 422
+    VERSION_NAME = "2.5.1"
+    free = gradle.ext.free
+    SDK_MIN_VERSION = 28
+    SDK_TARGET_VERSION = 36
+    SDK_COMPILE_VERSION = 36
+    localProps = gradle.ext.localProps
+
+    ANDROID_MATERIAL_VERSION = '1.14.0'
+    ANDROID_PLAY_CORE_FD_VERSION = '2.1.0'
+    ANDROIDX_CORE_VERSION = '1.19.0'
+    ANDROIDX_MEDIA_VERSION = '1.8.0'
+    ANDROIDX_APPCOMPAT_VERSION = '1.7.1'
+    ANDROIDX_CONSTRAINTLAYOUT_VERSION = '2.2.1'
+    ANDROIDX_SWIPEREFRESHLAYOUT_VERSION = '1.2.0'
+    GUAVA_VERSION = '33.6.0-android'
+
+    addons = [
+            [
+                    name       : 'translate',
+                    icon       : 'translate',
+                    class      : 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.TranslateAddon',
+                    hasSettings: false
+            ],
+            [
+                    name   : 'subgen',
+                    icon   : 'subgen',
+                    class  : 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.SubGenAddon',
+                    depends: 'exoplayer,translate'
+            ],
+    ]
+}
+
+gradle.ext.free = free
+
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.0.0-alpha08'
+        classpath 'com.google.gms:google-services:4.4.4'
+        // CloudStream v4.8.0's published Android ABI is built with Kotlin 2.3.x.
+        classpath 'org.jetbrains.kotlin.android:org.jetbrains.kotlin.android.gradle.plugin:2.3.21'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://dl.frostwire.com/maven' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+subprojects {
+    def isDynFeature = false
+
+    if ('fermata' == name) {
+        apply plugin: 'com.android.application'
+    } else if (gradle.ext.modules.contains(':' + name)) {
+        isDynFeature = true
+        apply plugin: 'com.android.dynamic-feature'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+
+    android {
+        compileSdk SDK_COMPILE_VERSION
+        ndkVersion = '29.0.14206865'
+
+        defaultConfig {
+            minSdkVersion SDK_MIN_VERSION
+            targetSdkVersion SDK_TARGET_VERSION
+            vectorDrawables.useSupportLibrary = true
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            resConfigs 'en', 'ru', 'it', 'tr', 'de', 'pt', 'vi', 'pl', 'hr', 'ja', 'zh_TW', 'ko',
+                    'fr', 'ro', 'ar', 'es', 'km'
+            buildConfigField "boolean", 'free', "${gradle.ext.free}"
+            manifestPlaceholders['freeFeatureEnabled'] = (!gradle.ext.free).toString()
+        }
+
+        if (isDynFeature) {
+            flavorDimensions "version"
+
+            productFlavors {
+                mobile {
+                    dimension "version"
+                }
+                auto {
+                    dimension "version"
+                    applicationIdSuffix '.auto' + project.getProperties().getOrDefault('APP_ID_SFX', '')
+                }
+            }
+        }
+
+        buildFeatures {
+            buildConfig = true
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+            coreLibraryDesugaringEnabled = true
+        }
+
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
+
+        dependencies {
+            coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+        }
+    }
+
+    dependencies {
+        testImplementation 'junit:junit:4.13.2'
+        androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+    }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            preferProjectModules()
+            eachDependency { details ->
+                if (details.requested.group == 'com.google.guava' && details.requested.name == 'guava') {
+                    details.useVersion GUAVA_VERSION
+                }
+            }
+        }
+    }
+}
+
+gradle.projectsEvaluated {
+    def addons = new ArrayList<HashMap>(ext.addons)
+    gradle.ext.modules.forEach {
+        def p = project(it)
+        if (p.ext.has('addons')) {
+            p.ext.addons.forEach {
+                def info = new HashMap(it)
+                info['module'] = p.name
+                                addons.add(info)
+            }
+        }
+    }
+
+    def addonInfo = new StringBuilder(1024)
+    addonInfo.append('me.aap.utils.collection.CollectionUtils.sort(new me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.AddonInfo[] {\n')
+    addons.forEach {
+        def name = it['name']
+        addonInfo.append("  new me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.AddonInfo(" +
+                "\"${it.get('module', name)}\", \"${it['class']}\", " +
+                "R.string.addon_name_${name}, R.drawable.${it['icon']}, " +
+                "${it['order']}, ${it['hasSettings']}, ${it['enabled']}, " +
+                "\"${it.get('depends', "")}\"),\n")
+    }
+
+    def infoStr = addonInfo.append('})').toString()
+    project(':fermata').android.productFlavors.forEach {
+        it.buildConfigField 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.AddonInfo[]', 'ADDONS', infoStr
+    }
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}
+
+tasks.register('releaseArtifacts') {
+    group = 'build'
+    description = 'Build release AABs and universal APKs for auto and mobile flavors.'
+    dependsOn(
+            ':fermata:bundleAutoRelease',
+            ':fermata:bundleMobileRelease',
+            ':fermata:packageAutoReleaseUniversalApk',
+            ':fermata:packageMobileReleaseUniversalApk'
+    )
+}
+
+tasks.register('releaseDist') {
+    group = 'build'
+    description = 'Build release AABs and universal APKs and copy them to dist/.'
+    dependsOn releaseArtifacts
+    doLast {
+        def dest = layout.projectDirectory.dir('dist').asFile
+        def prefix = 'fermata-free-*'
+        dest.mkdirs()
+        delete fileTree(dest) {
+            include prefix
+        }
+        copy {
+            from fileTree(layout.projectDirectory.dir('fermata/build/outputs/bundle/autoRelease')) {
+                include "${prefix}.aab"
+            }
+            from fileTree(layout.projectDirectory.dir('fermata/build/outputs/bundle/mobileRelease')) {
+                include "${prefix}.aab"
+            }
+            from fileTree(layout.projectDirectory.dir('fermata/build/outputs/apk_from_bundle/autoRelease')) {
+                include "${prefix}-universal.apk"
+            }
+            from fileTree(layout.projectDirectory.dir('fermata/build/outputs/apk_from_bundle/mobileRelease')) {
+                include "${prefix}-universal.apk"
+            }
+            into dest
+        }
+        logger.lifecycle("Release artifacts copied to ${dest}")
+    }
+}

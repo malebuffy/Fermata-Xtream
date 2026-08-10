@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sub_st">Stations: %1$d.</string>
+    <string name="sub_gr">Groups: %1$d.</string>
+    <string name="sub_st_gr">Stations: %1$d. Groups: %2$d.</string>
+    <string name="radio_stations">Radio Stations</string>
+    <string name="add_radio_source">Add M3U radio source</string>
+    <string name="err_failed_to_add_radio_source">Failed to add source: %1$s</string>
+</resources>

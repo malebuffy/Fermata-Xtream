@@ -1,0 +1,29 @@
+android {
+    namespace = "me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.tv"
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+ext {
+    addons = [
+            [
+                    name       : 'tv',
+                    icon       : 'tv',
+                    class      : 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.tv.TvAddon',
+                    order      : 1,
+                    hasSettings: true
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation "androidx.media:media:${ANDROIDX_MEDIA_VERSION}"
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    implementation "androidx.constraintlayout:constraintlayout:${ANDROIDX_CONSTRAINTLAYOUT_VERSION}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${ANDROIDX_SWIPEREFRESHLAYOUT_VERSION}"
+    implementation "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
+}

@@ -1,0 +1,18 @@
+android {
+    namespace = "me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.engine.exoplayer"
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation "androidx.media:media:${ANDROIDX_MEDIA_VERSION}"
+    implementation "androidx.media3:media3-exoplayer:1.10.1"
+    implementation "androidx.media3:media3-exoplayer-hls:1.10.1"
+    implementation "androidx.media3:media3-exoplayer-dash:1.10.1"
+    implementation "androidx.media3:media3-datasource-cronet:1.10.1"
+    implementation "androidx.media3:media3-transformer:1.10.1"
+}

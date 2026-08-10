@@ -1,0 +1,28 @@
+android {
+    namespace = "me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.cast"
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+
+ext {
+    addons = [
+            [
+                    name   : 'cast',
+                    icon   : 'cast',
+                    class  : 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.cast.CastAddon',
+                    enabled: true
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation('com.google.android.gms:play-services-cast-framework:22.2.0') {
+        exclude group: 'androidx.annotation', module: 'annotation'
+    }
+}

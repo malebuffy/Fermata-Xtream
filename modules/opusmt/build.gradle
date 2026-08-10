@@ -1,0 +1,25 @@
+android {
+    namespace = 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.opusmt'
+    defaultConfig {
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+ext {
+    addons = [
+            [
+                    name : 'opusmt_translate',
+                    icon : 'translate',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.opusmt.OpusMtTranslateAddon',
+                    hasSettings: false
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.26.0'
+}

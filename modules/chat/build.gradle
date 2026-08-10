@@ -1,0 +1,26 @@
+android {
+    namespace = "me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.chat"
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+
+ext {
+    addons = [
+            [
+                    name   : 'chat',
+                    icon   : 'chat',
+                    class  : 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.chat.ChatAddon',
+                    enabled: true
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
+    implementation "androidx.media:media:${ANDROIDX_MEDIA_VERSION}"
+}

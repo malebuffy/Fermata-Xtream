@@ -1,0 +1,27 @@
+android {
+    namespace = 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.mlkit'
+    defaultConfig {
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+ext {
+    addons = [
+            [
+                    name : 'mlkit_translate',
+                    icon : 'translate',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.mlkit.MlkitTranslateAddon',
+                    hasSettings: false
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation('com.google.mlkit:translate:17.0.3') {
+        exclude group: 'com.squareup.okio', module: 'okio'
+    }
+}

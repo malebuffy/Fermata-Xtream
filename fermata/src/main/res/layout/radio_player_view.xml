@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF121212"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/radio_player_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.35"
+                android:text="@string/radio_player_title"
+                android:textColor="#FFFFFFFF"
+                android:textSize="28sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/radio_player_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:letterSpacing="0.25"
+                android:text="@string/radio_player_subtitle"
+                android:textAllCaps="true"
+                android:textColor="#99FFFFFF"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/radio_player_visualizer_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_player_gradient">
+
+            <me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.view.RadioVisualizerView
+                android:id="@+id/radio_visualizer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/radio_player_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.2"
+            android:textAllCaps="true"
+            android:textColor="#CCFFFFFF"
+            android:textSize="11sp"
+            tools:text="DANCE" />
+
+        <TextView
+            android:id="@+id/radio_player_station"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="marquee"
+            android:gravity="center_horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"
+            tools:text="Tycho - Awake" />
+    </LinearLayout>
+</merge>

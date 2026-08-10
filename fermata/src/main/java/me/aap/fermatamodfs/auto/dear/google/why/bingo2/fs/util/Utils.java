@@ -1,0 +1,169 @@
+package me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.util;
+
+import static android.os.Build.VERSION.SDK_INT;
+
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build.VERSION_CODES;
+import android.os.Environment;
+
+import androidx.annotation.Nullable;
+
+import com.google.android.play.core.splitcompat.SplitCompat;
+
+import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.BuildConfig;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.FermataApplication;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.R;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.AddonInfo;
+import me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.ui.activity.MainActivityDelegate;
+import me.aap.utils.app.App;
+import me.aap.utils.io.FileUtils;
+import me.aap.utils.log.Log;
+import me.aap.utils.misc.MiscUtils;
+import me.aap.utils.net.http.HttpFileDownloader;
+import me.aap.utils.ui.UiUtils;
+import me.aap.utils.ui.activity.ActivityDelegate;
+import me.aap.utils.ui.notif.HttpDownloadStatusListener;
+
+/**
+ * @author Andrey Pavlenko
+ */
+public class Utils {
+	private static final Map<Integer, Uri> resourceUriCache = new ConcurrentHashMap<>();
+
+	public static Uri getResourceUri(int resourceId) {
+		return getResourceUri(App.get(), resourceId);
+	}
+
+	public static Uri getResourceUri(Context ctx, int resourceId) {
+		Uri uri = resourceUriCache.get(resourceId);
+		if (uri == null) {
+			Resources res = ctx.getResources();
+			uri = new Uri.Builder()
+					.scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+					.authority(res.getResourcePackageName(resourceId))
+					.appendPath(res.getResourceTypeName(resourceId))
+					.appendPath(res.getResourceEntryName(resourceId))
+					.build();
+			resourceUriCache.put(resourceId, uri);
+		}
+		return uri;
+	}
+
+	public static boolean isVideoFile(String fileName) {
+		return (fileName != null) && isVideoMimeType(FileUtils.getMimeType(fileName));
+	}
+
+	public static boolean isVideoMimeType(String mime) {
+		return (mime != null) && mime.startsWith("video/");
+	}
+
+	public static HttpFileDownloader createDownloader(String url) {
+		return createDownloader(App.get(), url);
+	}
+
+	public static HttpFileDownloader createDownloader(Context ctx, String url) {
+		HttpFileDownloader d = new HttpFileDownloader();
+		HttpDownloadStatusListener l = new HttpDownloadStatusListener(ctx);
+		l.setSmallIcon(R.drawable.notification);
+		l.setTitle(ctx.getResources().getString(R.string.downloading, url));
+		l.setFailureTitle(s -> ctx.getResources().getString(R.string.err_failed_to_download, url));
+		d.setStatusListener(l);
+		return d;
+	}
+
+	// A workaround for Resources$NotFoundException
+	public static Context dynCtx(Context ctx) {
+		if (!BuildConfig.AUTO) SplitCompat.install(ctx);
+		return ctx;
+	}
+
+	public static boolean isSafSupported(@Nullable MainActivityDelegate a) {
+		if ((a != null) && a.isCarActivityNotMirror()) return false;
+		return MiscUtils.isSafSupported();
+	}
+
+	public static boolean isExternalStorageManager() {
+		return (SDK_INT >= VERSION_CODES.R) && Environment.isExternalStorageManager();
+	}
+
+	public static File getAddonsFileDir(AddonInfo i) {
+		Context ctx = App.get();
+		String name = "addons/" + i.moduleName;
+		File f = ctx.getExternalFilesDir(name);
+		return ((f == null) ? new File(ctx.getFilesDir(), name) : f);
+	}
+
+	public static File getAddonsCacheDir(AddonInfo i) {
+		Context ctx = App.get();
+		File f = ctx.getExternalCacheDir();
+		return new File((f == null) ? ctx.getCacheDir() : f, "addons/" + i.moduleName);
+	}
+
+	public static void send(ActivityDelegate a, Uri uri, String title, String mime) {
+		Intent i = new Intent();
+		i.setAction(Intent.ACTION_SEND);
+		i.putExtra(Intent.EXTRA_STREAM, uri);
+		i.setType(mime);
+		a.startActivity(Intent.createChooser(i, title));
+	}
+
+	public static boolean openUrl(Context ctx, String url) {
+		MainActivityDelegate a = MainActivityDelegate.get(ctx);
+		boolean gmap = url.contains("google.") && url.contains("/map");
+
+		if (!gmap && a.isCarActivityNotMirror()) return openUrlInBrowserFragment(ctx, url);
+
+		Uri u = Uri.parse(url);
+		Intent intent = new Intent(Intent.ACTION_VIEW, u);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		if (gmap) intent.setPackage("com.google.android.apps.maps");
+
+		try {
+			a.startActivity(intent);
+			return true;
+		} catch (ActivityNotFoundException ex) {
+			if (openUrlInBrowserFragment(ctx, url)) return true;
+
+			String msg = ctx.getResources().getString(R.string.err_failed_open_url, u);
+			a.createDialogBuilder().setMessage(msg)
+					.setPositiveButton(android.R.string.ok, null).show();
+			return false;
+		}
+	}
+
+	public static boolean openUrlInBrowserFragment(Context ctx, String url) {
+		try {
+			var a = MainActivityDelegate.get(ctx);
+			var f = a.showFragment(R.id.web_browser_fragment);
+			if (f != null) f.setInput(url);
+			return true;
+		} catch (Exception ex) {
+			Log.d(ex);
+			return false;
+		}
+	}
+
+	public static int getLauncherColor() {
+		return LauncherColorHolder.COLOR;
+	}
+
+	private static final class LauncherColorHolder {
+		static final int COLOR;
+
+		static {
+			var colors =
+					UiUtils.getDrawableColor(FermataApplication.get(), R.drawable.fermata_bg, Color.WHITE);
+			COLOR = colors[colors.length - 1];
+		}
+	}
+}

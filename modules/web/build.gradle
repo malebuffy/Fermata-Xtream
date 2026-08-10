@@ -1,0 +1,50 @@
+android {
+    namespace = "me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.web"
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+ext {
+    addons = [
+            [
+                    name : 'youtube',
+                    icon : 'youtube',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.web.yt.YoutubeAddon',
+                    order: 3
+            ],
+            [
+                    name : 'youtube_music',
+                    icon : 'youtube_music',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.web.yt.YoutubeMusicAddon',
+                    order: 4,
+                    enabled: true
+            ],
+            [
+                    name : 'youtube_kids',
+                    icon : 'youtube_kids',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.web.yt.YoutubeKidsAddon',
+                    order: 5,
+                    enabled: true
+            ],
+            [
+                    name : 'web_browser',
+                    icon : 'web',
+                    class: 'me.aap.fermatamodfs.auto.dear.google.why.bingo2.fs.addon.web.WebBrowserAddon',
+                    order: 6
+            ]
+    ]
+}
+
+dependencies {
+    implementation project(':utils')
+    implementation project(':fermata')
+    implementation "androidx.media:media:${ANDROIDX_MEDIA_VERSION}"
+    implementation "com.google.android.play:feature-delivery:${ANDROID_PLAY_CORE_FD_VERSION}"
+    implementation "androidx.appcompat:appcompat:${ANDROIDX_APPCOMPAT_VERSION}"
+    implementation "com.google.android.material:material:${ANDROID_MATERIAL_VERSION}"
+    implementation "androidx.constraintlayout:constraintlayout:${ANDROIDX_CONSTRAINTLAYOUT_VERSION}"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:${ANDROIDX_SWIPEREFRESHLAYOUT_VERSION}"
+    implementation 'androidx.webkit:webkit:1.16.0'
+}

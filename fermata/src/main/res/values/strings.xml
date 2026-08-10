@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_menu">Main menu</string>
+    <string name="gallery">Gallery</string>
+    <string name="gallery_all_photos">All Photos</string>
+    <string name="gallery_all_videos">All Videos</string>
+    <string name="gallery_browse_folders">Browse Folders</string>
+    <string name="gallery_scanning">Scanning storage…</string>
+    <string name="gallery_no_folders">No media folders found.</string>
+    <string name="gallery_empty">No photos or videos found on this device.</string>
+    <string name="video_player">Video Player</string>
+    <string name="app_name_mobile_release" translatable="false">Fermata Xtream</string>
+    <string name="app_name_auto_release" translatable="false">Fermata Xtream</string>
+    <string name="app_name_mobile_debug" translatable="false">Debug Fermata Xtream</string>
+    <string name="app_name_auto_debug" translatable="false">Debug Fermata Xtream</string>
+    <string name="mirror_service_name_release" translatable="false">Fermata Mirror</string>
+    <string name="mirror_service_name_debug" translatable="false">Debug Fermata Mirror</string>
+    <string name="mirror_fs_service_name_release" translatable="false">FS Fermata Mirror</string>
+    <string name="mirror_fs_service_name_debug" translatable="false">Debug FS Fermata Mirror</string>
+    <string name="media_service_name_mobile_release" translatable="false">@string/app_name_mobile_release</string>
+    <string name="media_service_name_auto_release" translatable="false">Fermata Media Service</string>
+    <string name="media_service_name_mobile_debug" translatable="false">@string/app_name_mobile_debug</string>
+    <string name="media_service_name_auto_debug" translatable="false">Debug Fermata Media Service</string>
+    <string name="engine_mp_name" translatable="false">MediaPlayer</string>
+    <string name="engine_exo_name" translatable="false">ExoPlayer</string>
+    <string name="engine_vlc_name" translatable="false">VLC</string>
+
+    <string name="module_name_gdrive" translatable="false">Google Drive</string>
+    <string name="module_name_sftp" translatable="false">SFTP</string>
+    <string name="module_name_smb" translatable="false">SMB</string>
+    <string name="module_name_web" translatable="false">Web</string>
+    <string name="module_name_tv" translatable="false">TV</string>
+    <string name="module_name_radio" translatable="false">Radio</string>
+
+    <string name="addons">Addons</string>
+    <string name="addon_name_tv">TV</string>
+    <string name="addon_name_radio">Radio</string>
+    <string name="radio_player_title">RADIO</string>
+    <string name="radio_player_subtitle">Online music</string>
+    <string name="addon_name_web_browser">Web browser</string>
+    <string name="addon_name_youtube" translatable="false">Youtube</string>
+    <string name="addon_name_youtube_music" translatable="false">YouTube Music</string>
+    <string name="addon_name_youtube_kids" translatable="false">YouTube Kids</string>
+    <string name="channel_list">Channel list</string>
+    <string name="addon_name_felex" translatable="false">Felex</string>
+    <string name="addon_name_cast" translatable="false">Google Cast</string>
+    <string name="addon_name_chat" translatable="false">ChatGPT</string>
+    <string name="addon_name_translate" translatable="false">Language translator</string>
+    <string name="addon_name_subgen" translatable="false">Subtitles generator</string>
+    <string name="addon_name_whisper" translatable="false">Whisper</string>
+    <string name="addon_name_mlkit" translatable="false">ML Kit</string>
+    <string name="addon_name_mlkit_translate" translatable="false">ML Kit Translate</string>
+    <string name="addon_name_opusmt" translatable="false">OPUS-MT</string>
+    <string name="addon_name_opusmt_translate" translatable="false">OPUS-MT Translate</string>
+
+    <string name="interface_prefs">Interface</string>
+    <string name="interface_prefs_aa">Android Auto</string>
+    <string name="playback_settings">Playback settings</string>
+    <string name="playback_control">Playback control</string>
+    <string name="engine_prefs">Media engine</string>
+
+    <string name="theme">Application theme</string>
+    <string name="theme_sub">Current theme: %1$s</string>
+    <string name="autoplay_last_tv_channel">Autoplay last TV channel</string>
+    <string name="autoplay_last_tv_channel_sub">Start the last watched channel when opening TV</string>
+    <string name="autoplay_last_radio">Autoplay last radio station</string>
+    <string name="autoplay_last_radio_sub">Start the last station when opening Radio</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="theme_black">Black</string>
+    <string name="theme_star_wars">Star Wars</string>
+    <string name="theme_purple">Purple</string>
+    <string name="theme_classic">Classic</string>
+    <string name="theme_liquid_glass" translatable="false">Liquid Glass</string>
+
+    <string name="nav_bar_pos">Navigation bar position</string>
+    <string name="nav_bar_pos_sub">Current position: %1$s</string>
+    <string name="nav_bar_pos_bottom">Bottom</string>
+    <string name="nav_bar_pos_left">Left</string>
+    <string name="nav_bar_pos_right">Right</string>
+
+    <string name="show_track_icons">Show track icons</string>
+    <string name="lang">Language</string>
+    <string name="trans_lang">Translation language</string>
+    <string name="hide_bars">Hide bars</string>
+    <string name="hide_bars_sub">Hide top and bottom bars when the control panel appears</string>
+    <string name="show_pg_up_down">Show page up/down buttons</string>
+    <string name="use_dpad_cursor">Use cursor for D-pad navigation</string>
+    <string name="fullscreen_mode">Fullscreen mode</string>
+    <string name="nav_bar_size">Navigation bar size</string>
+    <string name="tool_bar_size">Tool bar size</string>
+    <string name="control_panel_size">Control panel size</string>
+    <string name="text_icon_size">Text and icons size</string>
+    <string name="subtitles_size">Subtitles text size</string>
+
+    <string name="key_bindings">Key bindings</string>
+    <string name="key_on_click">On click</string>
+    <string name="key_on_long_click">On long click</string>
+    <string name="key_on_dbl_click">On double click</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_play">Play</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_play_pause">Play/Pause</string>
+    <string name="action_prev">Play previous</string>
+    <string name="action_next">Play next</string>
+    <string name="action_rw">Rewind</string>
+    <string name="action_ff">Fast forward</string>
+    <string name="action_vol_up">Volume up</string>
+    <string name="action_vol_down">Volume down</string>
+    <string name="action_vol_mute_unmute">Mute/Unmute</string>
+    <string name="action_activate_voice_ctrl">Activate voice control</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_cp_menu">Control panel menu</string>
+    <string name="action_back_or_exit">Back or exit</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_default">Default</string>
+    <string name="action_none">None</string>
+
+    <string name="play_next_on_completion">Play next on completion</string>
+
+    <string name="rw_ff_click">RW/FF - click</string>
+    <string name="rw_ff_long_click">RW/FF - long click</string>
+    <string name="prev_next_long_click">Prev/Next - long click</string>
+    <string name="play_pause_stop">Stop on Play/Pause long click</string>
+
+    <string name="time">Time</string>
+    <string name="time_unit">Time unit</string>
+    <string name="time_unit_sub">Current value: %1$s</string>
+    <string name="time_unit_second">Second</string>
+    <string name="time_unit_minute">Minute</string>
+    <string name="time_unit_percent">Percent</string>
+
+    <string name="video_control">Video control</string>
+    <string name="video_control_start_delay">Show on start</string>
+    <string name="video_control_touch_delay">Show on touch</string>
+    <string name="video_control_seek_delay">Show on seek</string>
+    <string name="video_aa_show_status">Show status bar in Android Auto</string>
+
+    <string name="enable_exoplayer">Enable ExoPlayer</string>
+    <string name="enable_vlcplayer">Enable VLC</string>
+    <string name="preferred_audio_engine">Preferred audio engine</string>
+    <string name="preferred_video_engine">Preferred video engine</string>
+    <string name="engine_installed">Media engine installed: %1$s</string>
+    <string name="engine_uninstalled">Media engine uninstalled: %1$s</string>
+
+    <string name="preferred_media_scanner">Preferred media scanner</string>
+    <string name="preferred_media_scanner_default">Default</string>
+    <string name="preferred_media_scanner_system">System</string>
+
+    <string name="voice_search">Voice search</string>
+    <string name="voice_control">Voice control</string>
+    <string name="voice_control_fb">Floating button</string>
+    <string name="voice_control_sub_long">Activate voice control on long press</string>
+    <string name="voice_control_home_listen">Main menu constant listening</string>
+    <string name="voice_control_home_listen_sub">Keep listening for main menu commands while the main menu is shown</string>
+    <string name="voice_control_subst">Word substitution</string>
+    <string name="voice_control_subst_sub">Replace a word with an another word or a phrase</string>
+    <string name="voice_control_subst_hint">on: play\noff: pause</string>
+
+    <string name="module_installation">Module installation: %1$s</string>
+    <string name="install_pending">Installation pending: %1$s</string>
+    <string name="downloading">Downloading %1$s</string>
+    <string name="installing">Installing %1$s</string>
+
+    <string name="speed">Speed</string>
+    <string name="audio_effects">Audio effects</string>
+    <string name="equalier">Equalizer</string>
+    <string name="preset_name">Preset name</string>
+    <string name="virtualizer">Virtualizer</string>
+    <string name="auto">Auto</string>
+    <string name="binaural">Binaural</string>
+    <string name="transaural">Transaural</string>
+    <string name="bass_boost">Bass boost</string>
+    <string name="vol_boost">Volume boost</string>
+    <string name="strength">Strength</string>
+    <string name="apply_to">Apply to</string>
+
+    <string name="video">Video</string>
+    <string name="video_settings">Video settings</string>
+    <string name="video_scaling">Video scaling</string>
+    <string name="hw_accel">Hardware acceleration</string>
+    <string name="hw_accel_auto">Auto</string>
+    <string name="hw_accel_full">Full</string>
+    <string name="hw_accel_decoding">Decoding</string>
+    <string name="hw_accel_disabled">Disabled</string>
+    <string name="video_scaling_best">Best fit</string>
+    <string name="video_scaling_fill">Fill screen</string>
+    <string name="video_scaling_orig">Original size</string>
+    <string name="video_scaling_4" translatable="false">4x3</string>
+    <string name="video_scaling_16" translatable="false">16x9</string>
+
+    <string name="audio">Audio</string>
+    <string name="audio_delay">Audio delay</string>
+    <string name="audio_delay_aa">Audio delay - Android Auto</string>
+    <string name="preferred_audio_lang">Preferred audio stream languages</string>
+    <string name="preferred_audio_key">Prefer audio stream with keywords</string>
+    <string name="select_audio_stream">Select audio stream</string>
+
+    <string name="subtitles">Subtitles</string>
+    <string name="subtitles_auto">Auto generated</string>
+    <string name="subtitle_delay">Subtitles delay</string>
+    <string name="display_subtitles">Display subtitles</string>
+    <string name="preferred_sub_lang">Preferred subtitles languages</string>
+    <string name="preferred_sub_key">Prefer subtitles with keywords</string>
+    <string name="select_subtitles">Select subtitles</string>
+
+    <string name="sub_gen_buf">Buffer length</string>
+    <string name="sub_gen_buf_sub">Preload ahead the specified number of seconds</string>
+    <string name="sub_gen_chunk">Chunk length</string>
+    <string name="sub_gen_chunk_sub">Process the buffer in chunks of the specified duration</string>
+    <string name="sub_gen_model">Model</string>
+    <string name="sub_gen_translate">Translate</string>
+    <string name="sub_gen_use_gpu">Use GPU</string>
+    <string name="sub_gen_single">Single segment</string>
+    <string name="sub_gen_single_sub">Transcribe the entire chunk as a single segment</string>
+    <string name="sub_gen_downloading">Please wait while the model is downloaded.</string>
+    <string name="sub_gen_download_fail">Failed to download the model: %s!</string>
+    <string name="sub_gen_cleanup">Delete other downloaded models from cache</string>
+    <string name="sub_gen_cleanup_done">Deleted: %s</string>
+
+    <string name="string_format" translatable="false">%1$s</string>
+    <string name="eq_hz">%1$s Hz</string>
+    <string name="eq_khz">%1$s kHz</string>
+
+    <string name="current_track">Current track</string>
+    <string name="current_folder">Current folder</string>
+
+    <string name="folders">Folders</string>
+    <string name="favorites">Favorites</string>
+    <string name="playlists">Playlists</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="settings">Settings</string>
+    <string name="menu">Menu</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="got_to_current">Current track</string>
+
+    <string name="view">View</string>
+    <string name="title">Title</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="seq_num">Sequence number</string>
+    <string name="track_name">Name</string>
+    <string name="file_name">File name</string>
+    <string name="date">Date</string>
+    <string name="latest_added">Latest added</string>
+    <string name="random">Random</string>
+    <string name="open_addon_on_start">Open on start</string>
+    <string name="open_addon_on_start_sub">Current: %1$s</string>
+    <string name="open_addon_on_start_home">Main menu</string>
+    <string name="descending">Descending</string>
+    <string name="album">Album</string>
+    <string name="artist">Artist</string>
+    <string name="duration">Duration</string>
+
+    <string name="sort_by">Sort by</string>
+    <string name="do_not_sort">Do not sort</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
+    <string name="rewind">Rewind</string>
+    <string name="fast_forward">Fast forward</string>
+    <string name="repeat">Repeat</string>
+    <string name="repeat_disable">Do not repeat</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="shuffle_disable">Do not shuffle</string>
+    <string name="programme_guide">Programme guide</string>
+    <string name="favorites_add">Add to favorites</string>
+    <string name="favorites_remove">Remove from favorites</string>
+    <string name="mark_watched">Mark as watched</string>
+    <string name="mark_unwatched">Mark as unwatched</string>
+    <string name="preferred_media_engine">Preferred media engine</string>
+    <string name="by_default">Default</string>
+
+    <string name="playlist_add">Add to playlist</string>
+    <string name="playlist_remove_item">Remove from playlist</string>
+    <string name="playlist_create">Create playlist</string>
+    <string name="playlist_remove">Remove playlist</string>
+    <string name="playlist_name">Playlist name</string>
+
+    <string name="bookmarks">Bookmarks</string>
+    <string name="create_bookmark">Create bookmark</string>
+    <string name="remove_bookmark">Remove bookmark</string>
+    <string name="remove_all_bookmarks">Remove all bookmarks</string>
+    <string name="bookmark_name">Name</string>
+    <string name="bookmark_time">Time</string>
+    <string name="fs_play_web_options">FS Play web options</string>
+    <string name="fs_play_desktop_mode">desktop mode</string>
+    <string name="fs_play_toggle_scaling">Toggle scaling</string>
+    <string name="fs_play_channel_page">Page %1$d of %2$d</string>
+
+    <string name="folder_subtitle">Files: %1$d. Folders: %2$d.</string>
+    <string name="browsable_subtitle">Tracks: %1$d.</string>
+    <string name="add_folder">Add folder</string>
+    <string name="remove_folder">Remove folder</string>
+    <string name="select">Select</string>
+    <string name="select_all">Select all</string>
+    <string name="unselect_all">Unselect all</string>
+    <string name="refresh">Refresh</string>
+    <string name="rescan">Rescan</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm">Delete %1$s?</string>
+    <string name="delete_file_title">Delete file</string>
+    <string name="delete_file_question">Are you sure you want to delete file?</string>
+    <string name="delete_file_failed">Failed to delete file %1$s</string>
+    <string name="loading">Loading…</string>
+    <string name="press_back_again">Press back button again to exit.</string>
+    <string name="please_restart_app">Please restart the application.</string>
+    <string name="use_phone_to_grant_perm">Please use you phone to grant required permissions.</string>
+
+    <string name="vfs_content">Content</string>
+    <string name="vfs_file_system">File system</string>
+    <string name="vfs_gdrive">Google drive</string>
+    <string name="vfs_sftp" translatable="false">SFTP</string>
+    <string name="vfs_smb" translatable="false">LAN (SMB)</string>
+    <string name="m3u_playlist">M3U playlist</string>
+    <string name="m3u_playlist_name">Name</string>
+    <string name="m3u_playlist_location">Location</string>
+    <string name="m3u_playlist_location_hint">File or http(s) URL</string>
+    <string name="m3u_playlist_agent" translatable="false">User-Agent</string>
+    <string name="m3u_playlist_timeout" translatable="false">Response timeout</string>
+    <string name="m3u_playlist_video">Video playlist</string>
+
+    <string name="eq_manual">Manual</string>
+    <string name="eq_normal">Normal</string>
+    <string name="eq_classical">Classical</string>
+    <string name="eq_dance">Dance</string>
+    <string name="eq_flat">Flat</string>
+    <string name="eq_folk">Folk</string>
+    <string name="eq_heavy_metal">Heavy Metal</string>
+    <string name="eq_hip_hop">Hip Hop</string>
+    <string name="eq_jazz">Jazz</string>
+    <string name="eq_pop">Pop</string>
+    <string name="eq_rock">Rock</string>
+
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="path">Path</string>
+    <string name="share_name">Share name</string>
+    <string name="domain">Domain</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="private_key">Private key</string>
+    <string name="private_key_pass">Private key password</string>
+
+
+    <string name="timer">Timer</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+
+    <string name="enable">Enable</string>
+    <string name="open_dashcam" translatable="false">Open DashCam</string>
+    <string name="move_left">Move left</string>
+    <string name="move_right">Move right</string>
+    <string name="move_up">Move up</string>
+    <string name="move_down">Move down</string>
+
+    <string name="sys_bars_on_video_touch">Show system bars on video touch</string>
+    <string name="play_video_landscape">Playing video in landscape mode</string>
+    <string name="clock_pos">Clock position</string>
+    <string name="clock_pos_none">None</string>
+    <string name="clock_pos_left">Left</string>
+    <string name="clock_pos_right">Right</string>
+    <string name="clock_pos_center">Center</string>
+    <string name="change_brightness">Change brightness while playing video</string>
+    <string name="video_brightness">Video brightness</string>
+    <string name="change_brightness_sub">The brightness can also be changed with two finger scroll</string>
+    <string name="video_disabled_while_driving">VIDEO DISABLED WHILE DRIVING.\nCHANGE VIDEO IN MOTION IN SETTINGS &gt; VIDEO SETTINGS.</string>
+    <string name="video_in_motion">Video in motion</string>
+    <string name="video_in_motion_sub">Allow video while the car is moving</string>
+    <string name="video_in_motion_disclaimer_title">Important Safety and Legal Disclaimer</string>
+    <string name="video_in_motion_disclaimer_message">The \"Video in Motion\" feature may conflict with local traffic laws and regulations in your jurisdiction. Please be aware of the following:\n\n- Legal Responsibility: You are solely responsible for ensuring that your use of this feature complies with all applicable laws.\n- Safety Recommendation: I strongly advise against using this feature while the vehicle is in motion.\n- Usage Policy: Video playback should only be utilized while the vehicle is safely parked.</string>
+    <string name="video_in_motion_dont_enable">Don\'t enable</string>
+    <string name="video_in_motion_enable_responsible">Enable, I am responsible</string>
+    <string name="video_in_motion_threshold">Video guard threshold</string>
+    <string name="video_in_motion_threshold_sub">Show the driving guard above this speed in km/h</string>
+    <string name="debug">Debug</string>
+    <string name="speed_display">Speed display</string>
+    <string name="speed_display_sub">Overlay the car speed reading on video</string>
+    <string name="watched_threshold">Watched threshold</string>
+    <string name="watched_threshold_sub">Marked video as watched, if more than this number of percentages has been watched</string>
+
+    <string name="other">Other</string>
+    <string name="check_updates">Check for updates on startup</string>
+    <string name="update">Update</string>
+    <string name="update_question">New version %1$s is available.\nWould you like to update the app?</string>
+    <string name="export_prefs">Export preferences to file</string>
+    <string name="export_prefs_sub">Export settings, folders, playlists etc. to file</string>
+    <string name="export_prefs_ok">Preferences have been saved in file %1$s.</string>
+    <string name="export_prefs_failed">Failed to export preferences: %1$s</string>
+    <string name="import_prefs">Import preferences from file</string>
+    <string name="import_prefs_sub">Import, previously exported, preferences from file</string>
+    <string name="import_prefs_ok">Preferences have been successfully imported.\nPlease, restart the application.</string>
+    <string name="import_prefs_failed">Failed to import preferences: %1$s</string>
+    <string name="prefs_not_found">No preferences found</string>
+    <string name="open_log">Open log file</string>
+    <string name="unlock_phone_and_grant">Unlock the phone and grant the requested permissions.</string>
+    <string name="screen_capture_rejected">Screen capture request rejected.</string>
+    <string name="enable_overlay_permission">Enable display over other apps for Fermata Xtream.</string>
+    <string name="enable_write_settings_permission">Allow Fermata Xtream to change system settings.</string>
+    <string name="enable_accessibility_permission">Enable the Fermata Xtream accessibility service for mirror controls.</string>
+    <string name="select_screen_capture_mode">Allow full-screen capture for FS Fermata Mirror.</string>
+    <string name="accessibility_dsc">The accessibility service is used by Fermata Mirror to simulate touch screen events.</string>
+    <string name="accessibility_disclosure_title">Accessibility service</string>
+    <string name="accessibility_disclosure">Fermata uses Android Accessibility Service for the mobile mirror/control feature. It simulates touch gestures, Back/Home actions, and button clicks requested by the user. Fermata does not collect, store, upload, or share screen content or personal data through this service.</string>
+    <string name="media_projection_action_text">Start now</string>
+
+    <string name="about">About</string>
+    <string name="about_html"><![CDATA[<H1 align="center">Fermata Media Player</H1>
+        <p>Fermata Media Player is a free, open source audio and video player with a simple and
+        intuitive interface.</p>
+        <p><b>Mod feature:</b> Xtream account support added</p>
+        <p><b>Version:</b> %1$s (%2$d)</p>
+        <p><b>Home page:</b> <a href="%3$s">%3$s</a></p>
+        ]]></string>
+
+    <string name="err_failed_to_play">Failed to play %s</string>
+    <string name="err_failed_to_play_cause">Failed to play %1$s: %2$s</string>
+    <string name="err_unsupported_source_type">Unsupported source type: %s</string>
+    <string name="err_playlist_exists">Playlist already exists: %1$s</string>
+    <string name="err_invalid_playlist_name">Invalid playlist name: %1$s</string>
+    <string name="err_failed_add_folder">Failed to add folder: %1$s</string>
+    <string name="err_failed_open_url">Failed to open URL: %1$s</string>
+    <string name="err_failed_install_module">Failed to install module: %1$s</string>
+    <string name="err_failed_to_download">Failed to download %1$s</string>
+    <string name="err_no_audio_record_perm">Audio recording permission is not granted</string>
+</resources>

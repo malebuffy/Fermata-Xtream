@@ -4,7 +4,7 @@
 Fermata Xtream Free is free. If you paid for this app, you were scammed.
 
 ## What This Is
-Fermata Xtream begun as a modded fork of **Fermata Media Player** focused on improving IPTV use with Xtream account support inside the TV addon. It is now entirely based on proprietary code keeping some of the UI to continue honor the original app.
+Fermata Xtream begun as a modded fork of **Fermata Media Player** focused on improving IPTV use with Xtream account support inside the TV addon. 
 
 Original project: https://github.com/AndreyPavlenko/Fermata
 

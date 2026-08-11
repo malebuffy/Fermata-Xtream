@@ -11,10 +11,9 @@ Original project: https://github.com/AndreyPavlenko/Fermata
 This repository contains the **free** open-source build only (-Pfree=true). Premium/rec-only integrations are not included in this source tree.
 
 ## Build
-ash
-./build.sh
+`./build.sh`
 # or on Windows:
-./build.ps1
+`./build.ps1`
 
 
 Artifacts are written to dist/ as ermata-free-*.

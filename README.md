@@ -16,7 +16,7 @@ This repository contains the **free** open-source build only (-Pfree=true). Prem
 `./build.ps1`
 
 
-Artifacts are written to dist/ as ermata-free-*.
+Artifacts are written to dist/ as Fermata-free-*.
 
 ## Main Mods in This Fork
 
@@ -70,7 +70,7 @@ Artifacts are written to dist/ as ermata-free-*.
 - Media service Bluetooth auto-start helper for Android Auto connections.
 
 ### UI/branding changes
-- App name changed to **Fermata Xtream**.
+- App name changed to ** Fermata Xtream **.
 - About page updated for Xtream account support.
 
 ## Upstream updates & fixes (from Fermata 2.0.1)

@@ -1,4 +1,4 @@
-# Fermata Xtream Free (Mod)
+# Fermata Xtream Free (Mod) - Discontinued
 
 ## Scam Warning
 Fermata Xtream Free is free. If you paid for this app, you were scammed.

@@ -8,8 +8,6 @@ Fermata Xtream begun as a modded fork of **Fermata Media Player** focused on imp
 
 Original project: https://github.com/AndreyPavlenko/Fermata
 
-This repository contains the **free** open-source build only (-Pfree=true). Premium/rec-only integrations are not included in this source tree.
-
 ## Build
 `./build.sh`
 # or on Windows:
